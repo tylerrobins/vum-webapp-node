@@ -1,0 +1,58 @@
+<%- include('header.ejs') -%>
+<div id="heading_container">
+  <div><img id="santam_logo" src="images\SANTAM-LOGO-WEB.png" alt="your image"></div>
+  <div id="ebi_title">Emerging Business Insurance</div>
+</div>
+<img src="images\header png 120@100.png" alt="" style="width: 100%; height: auto">
+<div id="headingParagraph">Protect your business assets with affordable, quality insurance from Santam, brought to you via MoyaApp</div>
+
+<div id="loadingSpinner">
+  <div class="spinner"></div>
+  <p id="fetchingDetails">Fetching details...</p>
+</div>
+
+<div class="option_div">
+  <i class="option_play fi fi-rs-angle-circle-right"></i>
+  <div class="option_name" id="starter_option">Starter</div>
+  <div class="option_price">R75 monthly</div>
+  <div class="option_desc">Congratulations, you have taken the exciting first step. This cover option will protect your business as you grow.</div>
+</div>
+
+<div class="option_div">
+  <i class="option_play fi fi-rs-angle-circle-right"></i>
+  <div class="option_name">Standard</div>
+  <div class="option_price">R125 monthly</div>
+  <div class="option_desc">You are ready for some wider cover for your important business assets.</div>
+</div>
+
+<div class="option_div">
+  <i class="option_play fi fi-rs-angle-circle-right"></i>
+  <div class="option_name">Premium</div>
+  <div class="option_price">R195 monthly</div>
+  <div class="option_desc">You are owning it, well done. This cover option will ensure peace of mind as you navigate the world of commerce.</div>
+</div>
+
+<div clas="form_div">
+  <div>
+  <form id="myForm" class="form-group">
+    <input type="hidden" name="x-binu-did" value="<%= xBinuDid %>"/>
+    <input type="hidden" name="number" value="<%= number %>"/>
+    <div class="form_input">
+      <select class="form-element" name="businessActivity"  id="businessActivity">
+          <option value="" selected disabled hidden>SELECT YOUR BUSINESS ACTIVITY</option>
+        <% for(var i = 0; i<businessActivity.length; i++) { %>
+          <option value="<%=businessActivity[i]%>"><%=businessActivity[i]%></option>
+        <% } %>
+      </select>
+    </div>
+    <div class="form_submit">
+      <button class="form-element submit-button" type="submit">GET COVERED TODAY</button>
+    </div>
+  </form>
+  </div>
+
+<div id="ts_cs">By clicking the above, I hereby give Santam Limited consent to process my personal information, in accordance with the provisions of the Protection of Personal Information Act, for purposes related solely to this application for insurance.</div>
+</div>
+
+
+<script type="text/javascript" src="/javascript/scripts.js"></script>

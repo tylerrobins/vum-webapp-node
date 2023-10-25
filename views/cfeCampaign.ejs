@@ -1,0 +1,68 @@
+<%- include('header.ejs') -%>
+<div id="heading_container">
+  <div><img id="santam_logo" src="images\SANTAM-LOGO-WEB.png" alt="your image"></div>
+  <div id="ebi_title">Emerging Business Insurance</div>
+</div>
+<img src="images\header png 120@100.png" alt="" style="width: 100%; height: auto">
+<div id="headingParagraphCfe">Santam CFE Training<br>- Business Info -</div>
+<div class="cfe_form_div">
+    <form id="cfeForm" class="form-group">
+        <input type="hidden" name="x-binu-did" value="<%= xBinuDid %>"/>
+        <input type="hidden" name="phoneNumber" value="<%= number %>"/>
+        <div id="businessOwnerIntialQ">
+            <div class="form_business_owner">
+                <label class="cfe_label" for="businessOwner">Are you a small business owner?</label>
+                <select class="cfe-form-element" name="businessOwner"  id="businessOwner">
+                    <option value="" selected disabled hidden>PLEASE SELECT AN OPTION</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </div>
+        <div id="startingBusinessAddQs" style="display: none;">
+            <div class="form_business_owner">
+                <label class="cfe_label" for="startBusiness">Are you looking at starting a small business?</label>
+                <select class="cfe-form-element" name="startBusiness"  id="startBusiness">
+                    <option value="" selected disabled hidden>PLEASE SELECT AN OPTION</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </div>
+        <div id="businessOwnersAddQs" style="display: none;">
+            <div class="form_business_type">
+                <label class="cfe_label hasBusinessLabel" for="businessType">What kind of business do you have?</label>
+                <label class="cfe_label startingBusinessLabel" for="businessType">What kind of business do you plan to start?</label>
+                <input type="text" class="cfe-form-element" name="businessType" id="businessType" placeholder="BUSINESS TYPE">
+            </div>
+            <div class="form_business_name" id="tradingNameDiv">
+                <label class="cfe_label hasBusinessLabel" for="businessName">What is the trading name of your business?</label>
+                <input type="text" class="cfe-form-element" name="businessName" id="businessName" placeholder="BUSINESS NAME">
+            </div>
+            <div class="form_name_surname">
+                <label class="cfe_label" for="nameSurname">What is your name and surname?</label>
+                <input type="text" class="cfe-form-element" name="nameSurname" id="nameSurname" placeholder="NAME AND SURNAME">
+            </div>
+            <div class="form_business_turnover">
+                <label class="cfe_label hasBusinessLabel" for="businessTurnover">What is the monthly turnover of your business?</label>
+                <label class="cfe_label startingBusinessLabel" for="businessTurnover">What is the expected monthly turnover of your new business?</label>
+                <select class="cfe-form-element" name="businessTurnover"  id="businessTurnover">
+                    <option value="" selected disabled hidden>PLEASE SELECT AN OPTION</option>
+                    <option value="-R3000">Less than R3 000</option>
+                    <option value="R3001-R6000">Between R3 001 and R6 000</option>
+                    <option value="R6001-R10000">Between R6 001 and R10 000</option>
+                    <option value="R10001-R20000">Between R10 001 and R20 000</option>
+                    <option value="R20000+">Over R20 000</option>
+                </select>
+            </div>
+        </div>
+        <div class="cfe_form_submit">
+          <button class="cfe-form-element submit-button" id="cfe_submit_button" type="submit">COMPLETE YOUR REGISTRATION</button>
+        </div>
+    </form>
+    <div id="restrictedCFEpara" style="display: none;">
+        This CFE Training is restricted to small business owners or those with clear intention.<br>
+    </div>
+</div>
+
+<script type="text/javascript" src="/javascript/cfeScripts.js"></script>

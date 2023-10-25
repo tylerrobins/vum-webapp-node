@@ -1,0 +1,130 @@
+<%- include('header.ejs') -%>
+  <div id="heading_container">
+    <div><img id="santam_logo" src="images\SANTAM-LOGO-WEB.png" alt="your image"></div>
+    <div id="ebi_title">Emerging Business Insurance</div>
+  </div>
+  <img src="images\header png 120@100.png" alt="" style="width: 100%; height: auto">
+
+  <div id="headingItems">POLICY NUMBER: <%=policyNumber%>
+  </div>
+  <!-- <div id="headingItems">Client Number: <%=clientNumber%></div> -->
+  <div class="button-container">
+    <button onclick="openForm('claimsForm')">LODGE A CLAIM</button>
+    <button onclick="openForm('questionForm')">ASK A QUESTION</button>
+    <button onclick="openForm('policyCancellationForm')">CANCEL MY POLICY</button>
+  </div>
+
+  <div id="overlay" onclick="closeForm()"></div>
+
+  <form id="claimsForm" class="form-container">
+    <input type="hidden" name="number" value="<%= clientNumber %>" />
+    <input type="hidden" name="policyNumber" value="<%=policyNumber%>">
+    <h2 class="FormHeadings" id="claim_form">CLAIM FORM</h2>
+    <div class="form-box">
+      <h3 class="formbox_sub_heading">Select Claim Type</h3>
+      <div class="form-row">
+        <div class="checkbox-box">
+          <input type="checkbox" class="claimCheckbox" id="stock_content" name="stock_content" />
+          <label for="stock_content">Stock and Content</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="checkbox-box">
+          <input type="checkbox" class="claimCheckbox" id="personal_accident" name="personal_accident" />
+          <label for="personal_accident">Personal Accident</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="checkbox-box">
+          <input type="checkbox" class="claimCheckbox" id="cell_phone" name="cell_phone" />
+          <label for="cell_phone">Cell Phone Cover</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="date_time_loss" class="form_row_label">Date and time of loss:</label><br>
+      <input class="claims_form_selector" id="date_time_loss" type="datetime-local" name="date_time_loss" required>
+    </div>
+    <div class="form-row">
+      <label for="location_loss" class="form_row_label">Location of loss:</label><br>
+      <select class="claims_form_selector" name="location_loss" id="location_loss" required>
+        <option value="" selected disabled hidden>Select an Option</option>
+        <option value="on premises">On Business Premises</option>
+        <option value="off premises">Off Business Premises</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div id="locationInputContainer" style="display: none;">
+        <label for="location_input">Address of Loss:</label>
+        <input class="claims_form_selector" type="text" id="location_input" name="location_input">
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="loss_reason">Reason for Claim:</label><br>
+      <select class="claims_form_selector" name="loss_reason" id="loss_reason" required>
+        <option value="" selected disabled hidden>Select an Option</option>
+        <option value="accidental_damage">Accidental Damage</option>
+        <option value="storm_hail_actsofnature">Storm/Hail/Acts of Nature</option>
+        <option value="theft">Theft</option>
+        <option value="strike_riot">Strike Riot</option>
+        <option value="malicious_damage">Malicious Damage</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="description_loss">Description of loss:</label>
+      <textarea id="description_loss" name="description_loss" required></textarea>
+    </div>
+    <div class="form-row">
+      <button id="claim_submit_btn" type="submit">Submit</button>
+    </div>
+    <div class="from-row-declaration ">
+      <p id="declarations"><u>DECLARATION</u></p>
+      <ol id="declaration_li">
+        <li>You will notify us of any changes immediately.</li>
+        <li>The information you have provided is true and complete</li>
+        <li>You give consent that, VUM, may disclose your personal information to our service providers.</li>
+      </ol>
+    </div>
+    </div>
+  </form>
+
+  <form id="questionForm" class="form-container">
+    <input type="hidden" name="number" value="<%= clientNumber %>" />
+    <input type="hidden" name="policyNumber" value="<%=policyNumber%>">
+    <h2 class="FormHeadings">ASK A QUESTION</h2>
+    <div class="form-box">
+      <h3 class="formbox_sub_heading Form_sub_heading">We have some frequently asked questions that our Chat Bot may
+        be able to assist you with, kindly follow this <a href="moya://27700008020">link</a> to see if your questions
+        has been answered.</h3>
+    </div>
+
+    <div class="form-row">
+      <label for="description_loss">Log your question:</label>
+      <textarea id="question" name="question" required></textarea>
+    </div>
+    <div class="form-row">
+      <button id="claim_submit_btn" type="submit">Submit</button>
+    </div>
+  </form>
+
+  <form id="policyCancellationForm" class="form-container">
+    <input type="hidden" name="number" value="<%= clientNumber %>" />
+    <input type="hidden" name="policyNumber" value="<%=policyNumber%>">
+    <!-- todays date -->
+    <input type="hidden" name="todaysDate" value="<%= new Date().toISOString().slice(0, 10) %>" />
+    <h2 class="FormHeadings">CANCELLATION FORM</h2>
+    <div class="form-box">
+      <h3 class="formbox_sub_heading Form_sub_heading">We're sorry to see you go...</h3>
+    </div>
+
+    <div class="form-row">
+      <label for="cancellation_reason">Cancellation Reason:</label>
+      <textarea id="cancellation_reason" name="cancellation_reason" required></textarea>
+    </div>
+    <div class="form-row">
+      <button id="claim_submit_btn" type="submit">Submit</button>
+    </div>
+  </form>
+
+  <script type="text/javascript" src="/javascript/activeClientScripts.js"></script>
