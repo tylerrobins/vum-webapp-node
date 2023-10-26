@@ -8,7 +8,7 @@
             <source src="/cfe-training-serve-video" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <button id="videoCompletedButton" style="display: none;">Continue</button>
+        <button id="videoCompletedButton" onclick="">ATTEMPT THE QUIZ</button>
     </div>
 
     <!-- The Modal -->
@@ -22,11 +22,10 @@
                 <img src="/images/medal.png" alt="Medal Image">
             </div>
             <div class="modal-footer">
-                <button id="modalButton">ATTEMPT THE QUIZ</button>
-                <button id="modalButton">GO BACK TO VIDEO</button>
+                <button class="modalButton" id="goToQuiz">ATTEMPT THE QUIZ</button>
+                <button class="modalButton" id="closeModalButton">GO BACK TO VIDEO</button>
             </div>
         </div>
     </div>
-
+    <script type="text/javascript" src="/javascript/cfeTrainingScripts.js"></script>
 </body>
-<script type="text/javascript" src="/javascript/cfeTrainingScripts.js"></script>

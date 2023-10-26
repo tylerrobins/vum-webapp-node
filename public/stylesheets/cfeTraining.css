@@ -22,7 +22,7 @@ body {
 
 #videoCompletedButton {
     display: none; /* Initially hidden */
-    margin-top: 20px;
+    margin-top: 1.5vh;
     padding: 10px 20px;
     background-color: #013a81;
     color: #ffffff;
@@ -108,7 +108,7 @@ body {
 }
 
 /* Modal Button Styling */
-#modalButton {
+.modalButton {
     display: block;
     margin: 0.2vh 0;
     padding: 10px 20px;
@@ -151,7 +151,7 @@ body {
     .modal-header {
         font-size: 4vw;
     }
-    #modalButton {
+    .modalButton {
         font-size: 2.5vw;
     }
 }
@@ -160,7 +160,7 @@ body {
     .modal-header {
         font-size: 5vw;
     }
-    #modalButton {
+    .modalButton {
         font-size: 3.5vw;
     }
 }
@@ -169,7 +169,7 @@ body {
     .modal-header {
         font-size: 6vw;
     }
-    #modalButton {
+    .modalButton {
         font-size: 4.5vw;  
     }
 
@@ -182,7 +182,7 @@ body {
     .modal-header {
         font-size: 7vw;
     }
-    #modalButton {
+    .modalButton {
         font-size: 5.5vw;
     }
 }
@@ -202,7 +202,7 @@ body {
     .modal-header {
         font-size: 5.5vw;
     }
-    #modalButton {
+    .modalButton {
         font-size: 4vw;
     }
 }
@@ -215,7 +215,7 @@ body {
     .modal-header {
         font-size: 4.5vw;
     }
-    #modalButton {
+    .modalButton {
         font-size: 3vw;
     }
 }

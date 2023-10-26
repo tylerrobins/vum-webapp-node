@@ -3,15 +3,24 @@ document.addEventListener("DOMContentLoaded", function() {
     const videoElement = document.getElementById('cfeTrainingVideo');
     const continueButton = document.getElementById('videoCompletedButton');
     const closeModal = document.getElementById('closeModal');
+    const closeModalButton = document.getElementById('closeModalButton');
     const modal = document.getElementById('customModal');
-    const modalButton = document.getElementById('modalButton');
+    const quizButton = document.getElementById('goToQuiz');
+    const cfeVideo = document.getElementById('cfeTrainingVideo');
 
     // Event Listeners
     videoElement.addEventListener('ended', videoEndedHandler);
     closeModal.addEventListener('click', closeModalHandler);
-    modalButton.addEventListener('click', modalButtonHandler);
-    document.getElementById('cfeTrainingVideo').addEventListener('play', orientationCheck);
-    window.addEventListener("click", fullscreen, { once: true });
+    closeModalButton.addEventListener('click', closeModalHandler);
+    quizButton.addEventListener('click', goToQuiz);
+    continueButton.addEventListener('click', goToQuiz);
+    cfeVideo.addEventListener('play', orientationCheck);
+    cfeVideo.addEventListener('ended', exitFullscreen);
+    document.getElementById('redirectToQuestions').addEventListener('click', function() {
+        window.location.href = '/cfeTrainingQuestions';
+    });
+    
+    // window.addEventListener("click", fullscreen, { once: true });
     window.addEventListener('orientationchange', orientationChangeHandler);
     adjustVideoSize();
 
@@ -26,15 +35,24 @@ document.addEventListener("DOMContentLoaded", function() {
         modal.style.display = 'none';  // Hide the modal when close button is clicked
     }
 
-    function modalButtonHandler() {
-        modal.style.display = 'none';  // Hide the modal when modal's continue button is clicked
-        // Add any further action you want to take after clicking the modal's continue button here.
-    }
-
     function orientationCheck() {
         if (window.innerHeight > window.innerWidth) {
             this.pause();
             alert('Please rotate your phone to landscape mode to watch the video.');
+        }
+    }
+
+    function exitFullscreen() {
+        if (document.fullscreenElement) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
         }
     }
 
@@ -43,6 +61,11 @@ document.addEventListener("DOMContentLoaded", function() {
             videoElement.pause();
         }
     }
+
+    function goToQuiz() {
+        window.location.href = '/cfeTrainingQuestions';
+    }
+
     // Fullscreen function  
     function fullscreen() {
         var element = document.documentElement;
@@ -69,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const isButtonDisplayed = window.getComputedStyle(button).display !== 'none';
     
         if (isButtonDisplayed) {
-            video.style.maxHeight = '85vh';  // Adjusted for visible button
+            video.style.maxHeight = '84vh';  // Adjusted for visible button
         } else {
             video.style.maxHeight = '98vh';  // Adjusted for hidden button
         }
