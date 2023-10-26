@@ -2,27 +2,31 @@
 <head>
     <link rel='stylesheet' href='/stylesheets/cfeTraining.css'/>
 </head>
-<video  id="cfeTrainingVideo" controls>
-    <source src="/cfe-training-serve-video" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-<!-- The Modal -->
-<div id="customModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span id="closeModal" class="close">&times;</span>
-            <p style="margin-top: 0px;margin-bottom: 0px;">YOU HAVE COMPLETED YOUR TRAINING!</p>
-        </div>
-        <div class="modal-medal">
-            <img src="/images/medal.png" alt="Medal Image">
-        </div>
-        <div class="modal-footer">
-            <button id="modalButton">ATTEMPT THE QUIZ</button>
-            <button id="modalButton">GO BACK TO VIDEO</button>
+<body>
+    <div id="videoContainer">
+        <video  id="cfeTrainingVideo" controls>
+            <source src="/cfe-training-serve-video" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button id="videoCompletedButton" style="display: none;">Continue</button>
+    </div>
+
+    <!-- The Modal -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="closeModal" class="close">&times;</span>
+                <p style="margin-top: 0px;margin-bottom: 0px;">YOU HAVE COMPLETED YOUR TRAINING!</p>
+            </div>
+            <div class="modal-medal">
+                <img src="/images/medal.png" alt="Medal Image">
+            </div>
+            <div class="modal-footer">
+                <button id="modalButton">ATTEMPT THE QUIZ</button>
+                <button id="modalButton">GO BACK TO VIDEO</button>
+            </div>
         </div>
     </div>
-</div>
 
-<button id="videoCompletedButton" style="display: none;">Continue</button>
-
+</body>
 <script type="text/javascript" src="/javascript/cfeTrainingScripts.js"></script>
