@@ -538,7 +538,7 @@ router.get('/cfe', async(req, res, next) => {
   if(!xBinuDid){
     try {
       return res.redirect('moya://app.moya.biz.training')
-    } catch{
+    } catch {
     return res.response(200).json('Viewed outside of MoyaApp');
     };
   }
@@ -569,9 +569,14 @@ router.get('/cfeRegistered', async(req, res, next) => {
 });
 
 router.get('/cfeTraining', async(req, res) => {
+  // const xBinuDid = req.query['x-binu-did'];
+  //   if(!xBinuDid){
+  //       return res.status(200).json({ success: true, message: 'Viewed outside of MoyaApp' });
+  //   }
   res.render('cfeTraining');
 });
 
+// Helper to serve the CFE Training video
 router.get('/cfe-training-serve-video', (req, res) => {
   const videoPath = path.join(__dirname, "./cfe_training/CFE Training Video.mp4"); // Replace with your video path
   const stat = fs.statSync(videoPath);
@@ -603,6 +608,10 @@ router.get('/cfe-training-serve-video', (req, res) => {
       res.writeHead(200, head);
       fs.createReadStream(videoPath).pipe(res);
   }
+});
+
+router.get('/cfeTrainingQuestions', async(req, res) => {
+  res.render('cfeTrainingQuestions');
 });
 
 router.get('/api/health', (req, res, next) => {
