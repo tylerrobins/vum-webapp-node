@@ -37,7 +37,6 @@ p {
   clear: both;
 }
 
-
 /* Hide all question containers by default */
 .question-container {
   display: none;
@@ -48,37 +47,34 @@ p {
   display: block; /* You can change this to 'flex' if you need a flexible layout */
 }
 
+/* START, PREVIOUS, NEXT & SUBMIT BUTTON STYLING */
 #next_btn, #prev_btn, #submit_btn, #start_quiz {
   position: absolute;
   bottom: 10px; /* Adjust as needed to place above the bottom edge of the container */
-  
 }
 #start_quiz {
   display:none;
   right: 10px;
 }
-
 #prev_btn {
   display: none;
   /* float: left; */
 }
-
 #next_btn {
   display: none;
   right: 10px;
 }
-
 #submit_btn {
   display: none;
   right: 10px;
 }
+
 
 .question-container label {
   display: block; /* Ensure the label is on its own line */
   margin-bottom: 7px; /* Small margin between label and input */
   /* font-weight: bold; */
 }
-
 .question-container input[type=text],
 .question-container select,
 .question-container textarea {
@@ -88,21 +84,21 @@ p {
   border: 1px solid #ccc; /* Subtle border around inputs */
   border-radius: 4px; /* Rounded corners on inputs */
 }
-
 /* Style for radio buttons and checkboxes */
 .question-container input[type=radio],
 .question-container input[type=checkbox] {
   margin-right: 5px; /* Space to the right of the radio button/checkbox */
 }
-
 button {
-  padding: 10px 15px; /* Larger click area for buttons */
+  padding: 7px 15px; /* Larger click area for buttons */
   background-color: #007bff; /* Blue background */
   color: white; /* White text */
   border: none; /* No border */
   border-radius: 4px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor on hover */
   margin-right: 5px; /* Space between buttons */
+  font-size: 5vw;
+  min-width: 30vw;
 }
 
 button:hover {
@@ -130,7 +126,7 @@ button:disabled {
   border-radius: 4px;
   cursor: pointer;
   position: relative;
-  font-size: 5vw;
+  font-size: 4vw;
 }
 
 /* Style the label when the radio button is checked */
@@ -142,4 +138,8 @@ button:disabled {
 /* Optional: add a hover effect for labels */
 .single-select-checkbox label:hover {
   background-color: #0057b33a;
+}
+
+select {
+  font-size: 4.5vw;
 }
