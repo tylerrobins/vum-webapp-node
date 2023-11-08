@@ -1,11 +1,19 @@
 body {
     background: #f7f7f7; /* Light grey background */
     font-family: 'Arial', sans-serif; /* Use a modern font */
+    max-height: 100vh; 
+    max-width: 100vw; 
+    display: flex; /* Use the flexbox model */
+    justify-content: center;
+    align-items: center;
+    margin: 0; /* Reset default margin */
+    overflow: hidden; /* Hide scrollbars */
   }
   
 .all-question-container {
     max-width: 400px; /* Limit form width for larger screens */
-    margin: 20px auto; /* Center form on the page */
+    margin: 0 3vw;
+    min-width: 80vw;
     background: white; /* White form background */
     padding: 20px; /* Padding around form content */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow around form */
@@ -82,11 +90,4 @@ button:hover {
 
 button:disabled {
   background-color: #cccccc; /* Grey out button when disabled */
-}
-
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  body {
-    padding: 10px; /* Less padding on very small screens */
-  }
 }

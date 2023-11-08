@@ -578,7 +578,7 @@ router.get('/cfeTraining', async(req, res) => {
 
 // Helper to serve the CFE Training video
 router.get('/cfe-training-serve-video', (req, res) => {
-  const videoPath = path.join(__dirname, "./cfe_training/CFE Training Video.mp4"); // Replace with your video path
+  const videoPath = path.join(__dirname, "./cfe_training/CFE Training Video.mp4");
   const stat = fs.statSync(videoPath);
   const fileSize = stat.size;
   const range = req.headers.range;
