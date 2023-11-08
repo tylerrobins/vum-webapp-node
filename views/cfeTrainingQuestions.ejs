@@ -4,8 +4,15 @@
 </head>
 
 <div class="all-question-container">
+  <div id="on_load_div" class="question-container active">
+   <h1>Welcome to the CFE Quiz</h1>
+   <p>There are 10 questions that need to be completed.</p>
+   <p>Once you have successfully completed the quiz you will receive a CFE Training certificate</p>
+   <p>This quiz has been designed for portrait mode, so please ensure you have rotated your phone after the video to continue.</p>
+   <button id="start_quiz">Start Quiz</button>
+  </div>
   <form action="">
-      <div id="question1" class="question-container active">
+      <div id="question1" class="question-container">
         <h1>Question 1</h1>
         <p>Which type of business matches the following description?</p>
         <p>A formal arrangement by two or more people to own and run a business. There is no legal distinction between the owners and the business entity.</p>
@@ -27,23 +34,23 @@
         <label for="individual">
           <input type="checkbox" id="individual" name="category[]" value="individual">
           Individual
-        </label><br>
+        </label>
         <label for="insurer">
           <input type="checkbox" id="insurer" name="category[]" value="insurer">
           Insurer
-        </label><br>
+        </label>
         <label for="employer">
           <input type="checkbox" id="employer" name="category[]" value="employer">
           Employer
-        </label><br>
+        </label>
         <label for="dependent">
           <input type="checkbox" id="dependent" name="category[]" value="dependent">
           Dependent
-        </label><br>
+        </label>
         <label for="business_owner">
           <input type="checkbox" id="business_owner" name="category[]" value="business_owner">
           Business Owner
-        </label><br>
+        </label>
         <label for="employee">
           <input type="checkbox" id="employee" name="category[]" value="employee">
           Employee
@@ -56,9 +63,9 @@
         <p>Consider the following statement and indicate whether it is TRUE or FALSE.</p>
         <p>Good cashflow management is about proper timing of when to start your business and when to exit it.</p>
         <select name="" id="">
-        <option value="" selected disabled hidden>SELECT OPTION</option>
-        <option value="true">True</option>
-        <option value="false">False</option>
+          <option value="" selected disabled hidden>SELECT OPTION</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
         </select>
       </div>
 
@@ -67,20 +74,20 @@
         <p>Select the correct answer.</p>
         <p>What is shareholding?</p>
         <div class="single-select-checkbox">
-        <label for="option1">
-          <input type="radio" id="option1" name="shareholding" value="option1">
+        <label for="q4option1">
+          <input type="radio" id="q4option1" name="shareholding" value="q4option1">
           Shareholding entails using your own money (personal savings) to loan money to the business.
-        </label><br>
-        <label for="option2">
-          <input type="radio" id="option2" name="shareholding" value="option2">
+        </label>
+        <label for="q4option2">
+          <input type="radio" id="q4option2" name="shareholding" value="q4option2">
           Shareholding is a bond which is used to finance fixed assets like buildings and equipment used in the business.
-        </label><br>
-        <label for="option3">
-          <input type="radio" id="option3" name="shareholding" value="option3">
+        </label>
+        <label for="q4option3">
+          <input type="radio" id="q4option3" name="shareholding" value="q4option3">
           Shareholding entails someone buying into the business by paying a predetermined amount to own part of the share capital of the business.
-        </label><br>
-        <label for="option4">
-          <input type="radio" id="option4" name="shareholding" value="option4">
+        </label>
+        <label for="q4option4">
+          <input type="radio" id="q4option4" name="shareholding" value="q4option4">
           Shareholding entails a person who uses their own money to invest in your business, especially when it is a start-up and nobody else is willing to fund the business.
         </label><br>
         </div>
@@ -91,22 +98,22 @@
         <p>Select the correct answer.</p>
         <p>What is the main disadvantage of using shareholding as a strategy to acquire finance for the business?</p>
         <div class="single-select-checkbox">
-        <label for="option1">
-            <input type="radio" id="option1" name="disadv_shareholding_finance" value="option1">
+        <label for="q5option1">
+            <input type="radio" id="q5option1" name="disadv_shareholding_finance" value="q5option1">
             You need the bank to review and approve your business plan.
-        </label><br>
-        <label for="option2">
-            <input type="radio" id="option2" name="disadv_shareholding_finance" value="option2">
+        </label>
+        <label for="q5option2">
+            <input type="radio" id="q5option2" name="disadv_shareholding_finance" value="q5option2">
             You are giving away control to the new shareholder(s).
-        </label><br>
-        <label for="option3">
-          <input type="radio" id="option3" name="disadv_shareholding_finance" value="option3">
+        </label>
+        <label for="q5option3">
+          <input type="radio" id="q5option3" name="disadv_shareholding_finance" value="q5option3">
           You need to be a sole proprietor to sell shares in the business.
-        </label><br>
-        <label for="option4">
-          <input type="radio" id="option4" name="disadv_shareholding_finance" value="option4">
+        </label>
+        <label for="q5option4">
+          <input type="radio" id="q5option4" name="disadv_shareholding_finance" value="q5option4">
           You need to contribute from your own funding to sell shares.
-        </label><br>
+        </label>
         </div>
       </div>
 
@@ -115,20 +122,20 @@
         <p>Select the correct answer.</p>
         <p>Who should business owners talk to for proper advice on the short-term insurance products that will suit their business?</p>
         <div class="single-select-checkbox">
-        <label for="option1">
-          <input type="radio" id="option1" name="insurance_advice" value="option1">
+        <label for="q6option1">
+          <input type="radio" id="q6option1" name="insurance_advice" value="q6option1">
           A trusted business partner
-        </label><br>
-        <label for="option2">
-          <input type="radio" id="option2" name="insurance_advice" value="option2">
+        </label>
+        <label for="q6option2">
+          <input type="radio" id="q6option2" name="insurance_advice" value="q6option2">
           A personal financial advisor
-        </label><br>
-        <label for="option3">
-          <input type="radio" id="option3" name="insurance_advice" value="option3">
+        </label>
+        <label for="q6option3">
+          <input type="radio" id="q6option3" name="insurance_advice" value="q6option3">
           An accountant
-        </label><br>
-        <label for="option4">
-          <input type="radio" id="option4" name="insurance_advice" value="option4">
+        </label>
+        <label for="q6option4">
+          <input type="radio" id="q6option4" name="insurance_advice" value="q6option4">
           An accredited short-term broker
         </label><br>
         </div>

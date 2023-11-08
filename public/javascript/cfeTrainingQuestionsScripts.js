@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let currentQuestion = 1; // This is in the scope of the DOMContentLoaded callback
+    start_quiz.addEventListener('click', loadQuiz);
 
-    const next_btn = document.getElementById('next_btn');
-    const prev_btn = document.getElementById('prev_btn');
+    let currentQuestion = 1; // This is in the scope of the DOMContentLoaded callback
     
     // Use a closure to access and update currentQuestion
-    next_btn.addEventListener('click', () => {
+    document.getElementById('next_btn').addEventListener('click', () => {
         let answered = hasAnswerBeenGiven(currentQuestion);
         if(answered){
             currentQuestion = nextQuestion(currentQuestion); // Update the currentQuestion with the new value returned by the function
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(currentQuestion);
     });
 
-    prev_btn.addEventListener('click', () => {
+    document.getElementById('prev_btn').addEventListener('click', () => {
         currentQuestion = prevQuestion(currentQuestion); // Same for prevQuestion if you have it
         console.log(currentQuestion);
     });
@@ -21,6 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listeners to the dropdowns
     document.getElementById('q8option1').addEventListener('change', () => updateDropdowns('q8option1'));
     document.getElementById('q8option2').addEventListener('change', () => updateDropdowns('q8option2'));  
+
+    // Add event listeners for when the orientation might change
+    window.addEventListener('orientationchange', checkOrientation);
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('load', checkOrientation);
 });
 
 function nextQuestion(current) {
@@ -103,6 +107,7 @@ function hasAnswerBeenGiven(questionNumber) {
         case 5: 
         case 6:
             var radios = document.getElementById('question' + questionNumber).querySelectorAll('input[type="radio"]');
+            console.log(JSON.stringify(radios))
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].checked) {
                     answered = true;
@@ -142,7 +147,7 @@ function updateDropdowns(selectedDropdown) {
     } else if (selectedDropdown === 'q8option2') {
         recreateOptions(q8option3, [q8option1.value, q8option2.value], q8option3.value);
     }    
-  }
+}
   
 function recreateOptions(dropdown, excludeValues, selectedValue) {
     // Define the options available
@@ -183,5 +188,21 @@ function recreateOptions(dropdown, excludeValues, selectedValue) {
       // Otherwise, set the value to the previous selection or leave it at the placeholder
       dropdown.value = excludeValues.includes(selectedValue) ? "" : selectedValue;
     }
-  }
-  
+}
+
+function checkOrientation() {
+    if (window.innerHeight < window.innerWidth) {
+      // Show a message or overlay asking the user to rotate their device to portrait mode
+      document.getElementById('start_quiz').style.display = 'none';
+    } else {
+      // Hide the message or overlay when the user is in portrait mode
+      document.getElementById('start_quiz').style.display = 'block';
+    }
+}
+
+function loadQuiz(){
+    document.getElementById('question1').style.display = 'block';
+    document.getElementById('on_load_div').style.display = 'none';
+    document.getElementById('next_btn').style.display = 'block';
+    document.getElementById('start_quiz').style.display = 'none';
+}

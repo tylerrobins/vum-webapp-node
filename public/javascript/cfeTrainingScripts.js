@@ -15,10 +15,11 @@ document.addEventListener("DOMContentLoaded", function() {
     quizButton.addEventListener('click', goToQuiz);
     continueButton.addEventListener('click', goToQuiz);
     cfeVideo.addEventListener('play', orientationCheck);
+    window.addEventListener('resize', resizeCheck);
     cfeVideo.addEventListener('ended', exitFullscreen);
-    document.getElementById('redirectToQuestions').addEventListener('click', function() {
-        window.location.href = '/cfeTrainingQuestions';
-    });
+    // document.getElementById('redirectToQuestions').addEventListener('click', function() {
+    //     window.location.href = '/cfeTrainingQuestions';
+    // });
     
     // window.addEventListener("click", fullscreen, { once: true });
     window.addEventListener('orientationchange', orientationChangeHandler);
@@ -37,8 +38,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function orientationCheck() {
         if (window.innerHeight > window.innerWidth) {
-            this.pause();
-            alert('Please rotate your phone to landscape mode to watch the video.');
+            cfeVideo.pause();
+            setTimeout(function() {
+                alert('Please rotate your device to landscape mode to watch the video.');
+            }, 0);
+        }
+    }
+    
+
+    function resizeCheck() {
+        // Check if the orientation is now landscape
+        if (window.innerHeight < window.innerWidth) {
+            // The orientation is now landscape, so remove the event listener that pauses the video
+            cfeVideo.removeEventListener('play', orientationCheck);
+        } else {
+            // If the user goes back to portrait, add the event listener back
+            cfeVideo.addEventListener('play', orientationCheck);
         }
     }
 

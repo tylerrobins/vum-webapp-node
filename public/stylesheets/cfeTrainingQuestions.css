@@ -7,11 +7,22 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0; /* Reset default margin */
-    overflow: hidden; /* Hide scrollbars */
   }
+
+h1{
+  margin-block-start: 0.45em;
+  margin-block-end: 0.2em;
+}
+
+p {
+  display: block;
+  margin-block-start: 0.5em;
+}
   
 .all-question-container {
+    position: relative; 
     max-width: 400px; /* Limit form width for larger screens */
+    max-height: 95vh;
     margin: 0 3vw;
     min-width: 80vw;
     background: white; /* White form background */
@@ -30,32 +41,42 @@ body {
 /* Hide all question containers by default */
 .question-container {
   display: none;
-  margin-bottom: 20px; /* Add some space at the bottom of each question */
+  margin-bottom: 35px; /* Add some space at the bottom of each question */
 }
 /* Only display the active question container */
 .question-container.active {
   display: block; /* You can change this to 'flex' if you need a flexible layout */
 }
 
+#next_btn, #prev_btn, #submit_btn, #start_quiz {
+  position: absolute;
+  bottom: 10px; /* Adjust as needed to place above the bottom edge of the container */
+  
+}
+#start_quiz {
+  display:none;
+  right: 10px;
+}
+
 #prev_btn {
   display: none;
-  float: left;
+  /* float: left; */
 }
 
 #next_btn {
-  display: block;
-  float: right;
+  display: none;
+  right: 10px;
 }
 
 #submit_btn {
   display: none;
-  float: right;
+  right: 10px;
 }
 
 .question-container label {
   display: block; /* Ensure the label is on its own line */
-  margin-bottom: 5px; /* Small margin between label and input */
-  font-weight: bold; /* Make label text bold */
+  margin-bottom: 7px; /* Small margin between label and input */
+  /* font-weight: bold; */
 }
 
 .question-container input[type=text],
@@ -90,4 +111,35 @@ button:hover {
 
 button:disabled {
   background-color: #cccccc; /* Grey out button when disabled */
+}
+
+/* Hide the radio button visually but remain accessible for screen readers */
+.single-select-checkbox input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+  left: -9999px;
+}
+
+/* Style the label */
+.single-select-checkbox label {
+  display: block;
+  padding: 10px;
+  margin-bottom: 5px; /* Space between labels */
+  background-color: #f0f0f0af;
+  border: 1px solid #f0f0f0af;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  font-size: 5vw;
+}
+
+/* Style the label when the radio button is checked */
+.single-select-checkbox input[type="radio"]:checked + label {
+  background-color: #0057b3;
+  border-color: #0057b3;
+}
+
+/* Optional: add a hover effect for labels */
+.single-select-checkbox label:hover {
+  background-color: #0057b33a;
 }
