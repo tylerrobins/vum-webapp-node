@@ -3,35 +3,199 @@
     <link rel='stylesheet' href='/stylesheets/cfeTrainingQuestions.css'/>
 </head>
 
-<div id="page-1" class="form-page">
-    <h3>Questions 1-3</h3>
-    <label>Which type of business matches the following description?<input type="text" name="q1"></label>
-    <label>Question 2: <input type="text" name="q2"></label>
-    <label>Question 3: <input type="text" name="q3"></label>
-    <button id="next-button" onclick="changePage(2)">Next</button>
-</div>
+<div class="all-question-container">
+  <form action="">
+      <div id="question1" class="question-container active">
+        <h1>Question 1</h1>
+        <p>Which type of business matches the following description?</p>
+        <p>A formal arrangement by two or more people to own and run a business. There is no legal distinction between the owners and the business entity.</p>
+        <select name="" id="">
+          <option value="" selected disabled hidden>SELECT OPTION</option>
+          <option value="sole_proprietor">Sole Proprietor</option>
+          <option value="partnership">Partnership</option>
+          <option value="close_corporation">Close Corporation</option>
+          <option value="company">Company</option>
+        </select>
+      </div>
 
-<div id="page-2" class="form-page" style="display: none;">
-    <h3>Questions 4-6</h3>
-    <label>Question 4: <input type="text" name="q4"></label>
-    <label>Question 5: <input type="text" name="q5"></label>
-    <label>Question 6: <input type="text" name="q6"></label>
-    <button id="next-button" onclick="changePage(1)">Previous</button>
-    <button id="next-button" onclick="changePage(3)">Next</button>
-</div>
+      <div id="question2" class="question-container">
+        <h1>Question 2</h1>
+        <p>Select all answers that apply.</p>
+        <p>As the owner of a small or micro business, you need to plan for the financial needs of the three roles you perform in the operation of your business</p>
+        <p>What are these three roles?</p>
+        <div class="multi-checkboxes">
+        <label for="individual">
+          <input type="checkbox" id="individual" name="category[]" value="individual">
+          Individual
+        </label><br>
+        <label for="insurer">
+          <input type="checkbox" id="insurer" name="category[]" value="insurer">
+          Insurer
+        </label><br>
+        <label for="employer">
+          <input type="checkbox" id="employer" name="category[]" value="employer">
+          Employer
+        </label><br>
+        <label for="dependent">
+          <input type="checkbox" id="dependent" name="category[]" value="dependent">
+          Dependent
+        </label><br>
+        <label for="business_owner">
+          <input type="checkbox" id="business_owner" name="category[]" value="business_owner">
+          Business Owner
+        </label><br>
+        <label for="employee">
+          <input type="checkbox" id="employee" name="category[]" value="employee">
+          Employee
+        </label><br>
+        </div>
+      </div>
 
-<div id="page-3" class="form-page" style="display: none;">
-    <h3>Questions 7-10</h3>
-    <label>Question 7: <input type="text" name="q7"></label>
-    <label>Question 8: <input type="text" name="q8"></label>
-    <label>Question 9: <input type="text" name="q9"></label>
-    <label>Question 10: <input type="text" name="q10"></label>
-    <button id="next-button" onclick="changePage(2)">Previous</button>
-    <button id="next-button" onclick="submit">Submit</button>
-</div>
+      <div id="question3" class="question-container">
+        <h1>Question 3</h1>
+        <p>Consider the following statement and indicate whether it is TRUE or FALSE.</p>
+        <p>Good cashflow management is about proper timing of when to start your business and when to exit it.</p>
+        <select name="" id="">
+        <option value="" selected disabled hidden>SELECT OPTION</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+        </select>
+      </div>
 
-<form id="submit-form">
-    <!-- Hidden fields to store answers -->
-</form>
+      <div id="question4" class="question-container">
+        <h1>Question 4</h1>
+        <p>Select the correct answer.</p>
+        <p>What is shareholding?</p>
+        <div class="single-select-checkbox">
+        <label for="option1">
+          <input type="radio" id="option1" name="shareholding" value="option1">
+          Shareholding entails using your own money (personal savings) to loan money to the business.
+        </label><br>
+        <label for="option2">
+          <input type="radio" id="option2" name="shareholding" value="option2">
+          Shareholding is a bond which is used to finance fixed assets like buildings and equipment used in the business.
+        </label><br>
+        <label for="option3">
+          <input type="radio" id="option3" name="shareholding" value="option3">
+          Shareholding entails someone buying into the business by paying a predetermined amount to own part of the share capital of the business.
+        </label><br>
+        <label for="option4">
+          <input type="radio" id="option4" name="shareholding" value="option4">
+          Shareholding entails a person who uses their own money to invest in your business, especially when it is a start-up and nobody else is willing to fund the business.
+        </label><br>
+        </div>
+      </div>
+
+      <div id="question5" class="question-container">
+        <h1>Question 5</h1>
+        <p>Select the correct answer.</p>
+        <p>What is the main disadvantage of using shareholding as a strategy to acquire finance for the business?</p>
+        <div class="single-select-checkbox">
+        <label for="option1">
+            <input type="radio" id="option1" name="disadv_shareholding_finance" value="option1">
+            You need the bank to review and approve your business plan.
+        </label><br>
+        <label for="option2">
+            <input type="radio" id="option2" name="disadv_shareholding_finance" value="option2">
+            You are giving away control to the new shareholder(s).
+        </label><br>
+        <label for="option3">
+          <input type="radio" id="option3" name="disadv_shareholding_finance" value="option3">
+          You need to be a sole proprietor to sell shares in the business.
+        </label><br>
+        <label for="option4">
+          <input type="radio" id="option4" name="disadv_shareholding_finance" value="option4">
+          You need to contribute from your own funding to sell shares.
+        </label><br>
+        </div>
+      </div>
+
+      <div id="question6" class="question-container">
+        <h1>Question 6</h1>
+        <p>Select the correct answer.</p>
+        <p>Who should business owners talk to for proper advice on the short-term insurance products that will suit their business?</p>
+        <div class="single-select-checkbox">
+        <label for="option1">
+          <input type="radio" id="option1" name="insurance_advice" value="option1">
+          A trusted business partner
+        </label><br>
+        <label for="option2">
+          <input type="radio" id="option2" name="insurance_advice" value="option2">
+          A personal financial advisor
+        </label><br>
+        <label for="option3">
+          <input type="radio" id="option3" name="insurance_advice" value="option3">
+          An accountant
+        </label><br>
+        <label for="option4">
+          <input type="radio" id="option4" name="insurance_advice" value="option4">
+          An accredited short-term broker
+        </label><br>
+        </div>
+      </div>
+
+      <div id="question7" class="question-container">
+        <h1>Question 7</h1>
+        <p>Consider the following statement and indicate whether it is TRUE or FALSE.</p>
+        <p>There are many different types of tax you need to register for, depending on the type of business and your specific circumstances. You should always consult with an accountant.</p>
+        <select name="" id="">
+        <option value="" selected disabled hidden>SELECT OPTION</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+        </select>
+      </div>
+
+      <div id="question8" class="question-container">
+        <h1>Question 8</h1>
+        <p>Order the options:</p>
+        <label for="q8option1">STEP 1:</label>
+        <select name="q8option1" id="q8option1" class="order-select">
+            <option value="" selected disabled hidden>SELECT OPTION</option>
+            <option value="budget_big_costs">Budget for big costs</option>
+            <option value="id_list_expenses">Identify and list all expenses</option>
+            <option value="calc_revenue">Calculate revenue</option>
+        </select>
+        <label for="q8option2">STEP 2:</label>
+        <select name="q8option2" id="q8option2" class="order-select">
+            <option value="" selected disabled hidden>SELECT OPTION</option>
+            <option value="budget_big_costs">Budget for big costs</option>
+            <option value="id_list_expenses">Identify and list all expenses</option>
+            <option value="calc_revenue">Calculate revenue</option>
+        </select>
+        <label for="q8option3">STEP 3:</label>
+        <select name="q8option3" id="q8option3" class="order-select">
+            <option value="" selected disabled hidden>SELECT OPTION</option>
+            <option value="budget_big_costs">Budget for big costs</option>
+            <option value="id_list_expenses">Identify and list all expenses</option>
+            <option value="calc_revenue">Calculate revenue</option>
+        </select>
+      </div>
+
+      <div id="question9" class="question-container">
+        <h1>Question 9</h1>
+        <p>Consider the following statement and indicate whether it is TRUE or FALSE.</p>
+        <p>The first step of managing cashflow is to determine how much cash is coming into the business and how much the business has at any point in time.</p>
+        <select name="" id="">
+        <option value="" selected disabled hidden>SELECT OPTION</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+        </select>
+      </div>
+
+      <div id="question10" class="question-container">
+        <h1>Question 10</h1>
+        <p>Consider the following statement and indicate whether it is TRUE or FALSE.</p>
+        <p>Business insurance is used by the businesses to transfer the risk they face to an insurance company by paying the insurance company a premium.</p>
+        <select name="" id="">
+            <option value="" selected disabled hidden>SELECT OPTION</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+      </div>
+  </form>
+  <button id="prev_btn">Previous</button>
+  <button id="next_btn">Next</button>
+  <button id="submit_btn">Submit</button>
+</div>
 
 <script type="text/javascript" src="/javascript/cfeTrainingQuestionsScripts.js"></script>

@@ -1,4 +1,92 @@
-.form-page {
-    padding: 20px;
-    border: 1px solid #ccc;
+body {
+    background: #f7f7f7; /* Light grey background */
+    font-family: 'Arial', sans-serif; /* Use a modern font */
+  }
+  
+.all-question-container {
+    max-width: 400px; /* Limit form width for larger screens */
+    margin: 20px auto; /* Center form on the page */
+    background: white; /* White form background */
+    padding: 20px; /* Padding around form content */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow around form */
+    border-radius: 8px; /* Rounded corners on form */
+}
+
+.all-question-container::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* Hide all question containers by default */
+.question-container {
+  display: none;
+  margin-bottom: 20px; /* Add some space at the bottom of each question */
+}
+/* Only display the active question container */
+.question-container.active {
+  display: block; /* You can change this to 'flex' if you need a flexible layout */
+}
+
+#prev_btn {
+  display: none;
+  float: left;
+}
+
+#next_btn {
+  display: block;
+  float: right;
+}
+
+#submit_btn {
+  display: none;
+  float: right;
+}
+
+.question-container label {
+  display: block; /* Ensure the label is on its own line */
+  margin-bottom: 5px; /* Small margin between label and input */
+  font-weight: bold; /* Make label text bold */
+}
+
+.question-container input[type=text],
+.question-container select,
+.question-container textarea {
+  width: 100%; /* Full width inputs */
+  padding: 10px; /* Padding inside inputs */
+  margin-bottom: 10px; /* Space after inputs */
+  border: 1px solid #ccc; /* Subtle border around inputs */
+  border-radius: 4px; /* Rounded corners on inputs */
+}
+
+/* Style for radio buttons and checkboxes */
+.question-container input[type=radio],
+.question-container input[type=checkbox] {
+  margin-right: 5px; /* Space to the right of the radio button/checkbox */
+}
+
+button {
+  padding: 10px 15px; /* Larger click area for buttons */
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-right: 5px; /* Space between buttons */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+button:disabled {
+  background-color: #cccccc; /* Grey out button when disabled */
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  body {
+    padding: 10px; /* Less padding on very small screens */
+  }
 }
