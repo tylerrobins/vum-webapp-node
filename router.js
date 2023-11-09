@@ -490,10 +490,25 @@ router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
   // CODE TO BE ADDED
 
   // Check answers for each question
-  let incorrectAnswers = 0;
-  console.log(`DATA: ${JSON.stringify(data)}`);
+  let correctAnswers = 0;
+  if (data.q1 = "partnership") correctAnswers++;
+  if (data.q2.includes("individual") && data.q2.includes("employer") && data.q2.includes("business_owner")) correctAnswers++;
+  if (data.q3 = "false") correctAnswers++;
+  if (data.q4 = "q4option3") correctAnswers++;
+  if (data.q5 = "q5option2") correctAnswers++;
+  if (data.q6 = "q6option4") correctAnswers++;
+  if (data.q7 = "true") correctAnswers++;
+  
+  let q8Correct = true;
+  if (data.q8.step1 !== "calc_revenue") { q8Correct = false; } 
+  else if (data.q8.step2 !== "id_list_expenses") { q8Correct = false; } 
+  else if (data.q8.step3 !== "budget_big_costs") { q8Correct = false; }
+  
+  if (q8Correct) correctAnswers++;
+  if (data.q9 = "true") correctAnswers++;
+  if (data.q10 = "true") correctAnswers++;
 
-  res.status(200).json({ success: true, incorrectAnswers });
+  res.status(200).json({ success: true, correctAnswers });
 });
 
 // This will run when the client clicks on the "Business Insurance" Tile in the moya app.

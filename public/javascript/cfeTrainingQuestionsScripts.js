@@ -232,7 +232,7 @@ async function runFormSubmit(eventPara, formObj, spinnerObj){
     const q5 = formData.get('disadv_shareholding_finance');
     const q6 = formData.get('insurance_advice');
     const q7 = formData.get('q7');
-    const q8 = [formData.get('q8option1'), formData.get('q8option2'), formData.get('q8option3')];
+    const q8 = {"step1": formData.get('q8option1'), "step2": formData.get('q8option2'), "step3":formData.get('q8option3')};
     const q9 = formData.get('q9');
     const q10 = formData.get('q10');
     const q11 = formData.get('id_number');
