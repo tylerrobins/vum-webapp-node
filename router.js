@@ -600,7 +600,6 @@ router.get('/cfe-training-serve-video', (req, res) => {
 });
 
 router.get('/cfeTrainingQuestions', async(req, res) => {
-  console.log("TESTING WHERE ERROR IS")
   // Get number parameter
   const number = req.query['number'];
   res.render('cfeTrainingQuestions', {number});

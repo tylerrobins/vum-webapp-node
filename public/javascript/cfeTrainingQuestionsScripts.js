@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function nextQuestion(current) {
-    if(current == 9){
-        changeNextBtn('page10');
-    } else if(current == 1){
-        changeNextBtn('page2-9');
+    if(current == 10) {
+        changeNextBtn('page11');
+    } else if (current == 1) {
+        changeNextBtn('page2-10');
     }
     current++;
     document.getElementById('question' + current).style.display = 'block';
@@ -40,8 +40,8 @@ function nextQuestion(current) {
 }
 
 function prevQuestion(current) {
-    if(current == 10){
-        changeNextBtn('page2-9');
+    if(current == 11){
+        changeNextBtn('page2-10');
     } else if(current == 2){
         changeNextBtn('page1');
     }
@@ -58,11 +58,11 @@ function changeNextBtn(status){
         document.getElementById('submit_btn').style.display = 'none';
         document.getElementById('prev_btn').style.display = 'none';
         document.getElementById('next_btn').style.display = 'block';
-    } else if(status == 'page2-9'){
+    } else if(status == 'page2-10'){
         document.getElementById('submit_btn').style.display = 'none';
         document.getElementById('prev_btn').style.display = 'block';
         document.getElementById('next_btn').style.display = 'block';  
-    } else if(status == 'page10'){
+    } else if(status == 'page11'){
         document.getElementById('submit_btn').style.display = 'block';
         document.getElementById('prev_btn').style.display = 'block';
         document.getElementById('next_btn').style.display = 'none';
@@ -113,7 +113,8 @@ function hasAnswerBeenGiven(questionNumber) {
                     answered = true;
                     break; // Stop the loop as we found a checked radio
                 }
-            } break;
+            } 
+            break;
         case 8:
             // Get all select elements with the class 'order-select'
             var selects = document.querySelectorAll('.order-select');
@@ -126,7 +127,15 @@ function hasAnswerBeenGiven(questionNumber) {
                     break; // Stop the loop as we found a non-selected dropdown
               }
             }
-        break;
+            break;
+        case 11:
+            // Ensure answer for question 11 is not empty
+            // <input type="text" name="id_number" id="id_number" placeholder="ID/Passport Number" maxlength="13" required>
+            var id_number = document.getElementById('id_number');
+            if (!id_number.value === "" || !id_number.value === null) {
+                answered = true;
+            }
+            break;
     }
 
     if (!answered) {
