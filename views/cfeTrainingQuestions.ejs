@@ -217,6 +217,20 @@
   <button id="prev_btn">Previous</button>
   <button id="next_btn">Next</button>
   <button id="submit_btn" type="button">Submit</button>
+
+  <div id="failed_quiz_div" class="question-container">
+    <h1>Quiz not passed</h1>
+    <p>Unfortunately you didn't pass the quiz, you can retry the quiz to get your certificate</p>
+    <p>You got <span id="quiz_result"></span>/10</p>
+    <button id="restart_training_vid">Rewatch Video</button>
+    <button id="restart_quiz">Restart Quiz</button>
+   </div>
+  <div id="succesful_quiz_div" class="question-container">
+    <h1>You Passed</h1>
+    <p>Congratulations you passed the quiz by getting 10/10.</p>
+    <p>You will recieve your certificate via a message shortly.</p>
+    <button id="chat_btn">Go To Chat</button>
+   </div>
 </div>
 
 <script type="text/javascript" src="/javascript/cfeTrainingQuestionsScripts.js"></script>

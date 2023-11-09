@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     start_quiz.addEventListener('click', loadQuiz);
 
     let currentQuestion = 1; // This is in the scope of the DOMContentLoaded callback
-    
+    let phoneNumber = document.getElementById('phoneNumber').value;
+
     // Use a closure to access and update currentQuestion
     document.getElementById('next_btn').addEventListener('click', () => {
         let answered = hasAnswerBeenGiven(currentQuestion);
@@ -24,6 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listeners to the dropdowns
     document.getElementById('q8option1').addEventListener('change', () => updateDropdowns('q8option1'));
     document.getElementById('q8option2').addEventListener('change', () => updateDropdowns('q8option2'));  
+
+    // Set actions for result after quiz results have been shown.
+    document.getElementById('restart_training_vid').addEventListener('click', () => { window.location.href = '/cfeTraining/'+ phoneNumber; });
+    document.getElementById('restart_quiz').addEventListener('click', () => { window.location.href = '/cfeTrainingQuestions/'+ phoneNumber; });
+    document.getElementById('chat_btn').addEventListener('click', () => { window.location.href = 'moya://27700008020'; });
 
     // Add event listeners for when the orientation might change
     window.addEventListener('orientationchange', checkOrientation);
@@ -251,8 +257,20 @@ async function runFormSubmit(eventPara, formObj, spinnerObj){
         if (response.ok) {
             const data = await response.json();
             console.log('Success:', data);
-            // Redirect to another page or update the UI as needed
-            // window.location.href = 'moya://27700008020';
+            // Handle successful & failed quiz's
+            document.getElementById('question11').style.display = 'none';
+            document.getElementById('next_btn').style.display = 'none';
+            document.getElementById('prev_btn').style.display = 'none';
+            document.getElementById('submit_btn').style.display = 'none';
+            if (data.correctAnswers == 10) {
+                document.getElementById('succesful_quiz_div').style.display = 'block';
+                console.log("passed")
+            } else {
+                document.getElementById('failed_quiz_div').style.display = 'block';
+                let quizResult = document.getElementById("quiz_result");
+                quizResult.textContent = data.correctAnswers;
+                console.log("failed")
+            }
           } else {
             console.error('Error:', response.statusText);
             // Handle the error response and update the UI as needed
@@ -265,4 +283,4 @@ async function runFormSubmit(eventPara, formObj, spinnerObj){
           loadingSpinner.style.display = 'none';
         }
        
-    }
+}
