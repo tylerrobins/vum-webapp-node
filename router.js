@@ -482,6 +482,20 @@ router.post('/api/cfe', async(req, res, next) => {
   return res.status(200).json({ success: true });
 });
 
+// CFE training quiz
+router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
+  const data = req.body;
+
+  // Create/Update CFE Training Quiz Record Table in Azure Table Storage
+  // CODE TO BE ADDED
+
+  // Check answers for each question
+  let incorrectAnswers = 0;
+  console.log(`DATA: ${JSON.stringify(data)}`);
+
+  res.status(200).json({ success: true, incorrectAnswers });
+});
+
 // This will run when the client clicks on the "Business Insurance" Tile in the moya app.
 // It will render the web page and the business activity form.
 router.get('/', async(req, res, next) => {
@@ -602,6 +616,9 @@ router.get('/cfe-training-serve-video', (req, res) => {
 router.get('/cfeTrainingQuestions', async(req, res) => {
   // Get number parameter
   const number = req.query['number'];
+  if(!number){
+    return res.status(400).send('Missing number parameter');
+  }
   res.render('cfeTrainingQuestions', {number});
 });
 

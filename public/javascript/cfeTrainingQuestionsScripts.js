@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(currentQuestion);
     });
 
+    const form = document.getElementById('quizForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    document.getElementById('submit_btn').addEventListener('click', async (event) => {runFormSubmit(event, form, loadingSpinner)});
+
     // Add event listeners to the dropdowns
     document.getElementById('q8option1').addEventListener('change', () => updateDropdowns('q8option1'));
     document.getElementById('q8option2').addEventListener('change', () => updateDropdowns('q8option2'));  
@@ -215,3 +219,50 @@ function loadQuiz(){
     document.getElementById('next_btn').style.display = 'block';
     document.getElementById('start_quiz').style.display = 'none';
 }
+
+async function runFormSubmit(eventPara, formObj, spinnerObj){
+    eventPara.preventDefault();
+    const formData = new FormData(formObj);
+    spinnerObj.style.display = 'flex';
+    const phoneNumber = formData.get('phoneNumber');
+    const q1 = formData.get('q1');
+    const q2 = formData.getAll('category[]');
+    const q3 = formData.get('q3');
+    const q4 = formData.get('shareholding');
+    const q5 = formData.get('disadv_shareholding_finance');
+    const q6 = formData.get('insurance_advice');
+    const q7 = formData.get('q7');
+    const q8 = [formData.get('q8option1'), formData.get('q8option2'), formData.get('q8option3')];
+    const q9 = formData.get('q9');
+    const q10 = formData.get('q10');
+    const q11 = formData.get('id_number');
+
+    const url = `/api/cfeTrainingQuiz`;
+    try {
+        // Send POST request 
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ phoneNumber, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11}),
+        });
+        console.log(response);
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Success:', data);
+            // Redirect to another page or update the UI as needed
+            // window.location.href = 'moya://27700008020';
+          } else {
+            console.error('Error:', response.statusText);
+            // Handle the error response and update the UI as needed
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          // Handle network errors and update the UI as needed
+        } finally {
+          // Hide the spinner
+          loadingSpinner.style.display = 'none';
+        }
+       
+    }

@@ -3,6 +3,12 @@
     <link rel='stylesheet' href='/stylesheets/cfeTrainingQuestions.css'/>
 </head>
 
+<div id="loadingSpinner">
+  <div class="spinner"></div>
+  <p id="fetchingDetails">Submitting Answers...</p>
+</div>
+
+
 <div class="all-question-container">
   <div id="on_load_div" class="question-container active">
    <h1>Welcome to the CFE Quiz</h1>
@@ -11,12 +17,12 @@
    <p>This quiz has been designed for portrait mode, so please ensure you have rotated your phone after the video to continue.</p>
    <button id="start_quiz">Start Quiz</button>
   </div>
-  <form action="">
+  <form action="" id="quizForm">
       <div id="question1" class="question-container">
         <h1>Question 1</h1>
         <p>Which type of business matches the following description?</p>
         <p>A formal arrangement by two or more people to own and run a business. There is no legal distinction between the owners and the business entity.</p>
-        <select name="" id="">
+        <select name="q1" id="">
           <option value="" selected disabled hidden>SELECT OPTION</option>
           <option value="sole_proprietor">Sole Proprietor</option>
           <option value="partnership">Partnership</option>
@@ -62,7 +68,7 @@
         <h1>Question 3</h1>
         <p>Consider the following statement and indicate whether it is TRUE or FALSE.</p>
         <p>Good cashflow management is about proper timing of when to start your business and when to exit it.</p>
-        <select name="" id="">
+        <select name="q3" id="">
           <option value="" selected disabled hidden>SELECT OPTION</option>
           <option value="true">True</option>
           <option value="false">False</option>
@@ -145,7 +151,7 @@
         <h1>Question 7</h1>
         <p>Consider the following statement and indicate whether it is TRUE or FALSE.</p>
         <p>There are many different types of tax you need to register for, depending on the type of business and your specific circumstances. You should always consult with an accountant.</p>
-        <select name="" id="">
+        <select name="q7" id="">
         <option value="" selected disabled hidden>SELECT OPTION</option>
         <option value="true">True</option>
         <option value="false">False</option>
@@ -182,7 +188,7 @@
         <h1>Question 9</h1>
         <p>Consider the following statement and indicate whether it is TRUE or FALSE.</p>
         <p>The first step of managing cashflow is to determine how much cash is coming into the business and how much the business has at any point in time.</p>
-        <select name="" id="">
+        <select name="q9" id="">
         <option value="" selected disabled hidden>SELECT OPTION</option>
         <option value="true">True</option>
         <option value="false">False</option>
@@ -193,7 +199,7 @@
         <h1>Question 10</h1>
         <p>Consider the following statement and indicate whether it is TRUE or FALSE.</p>
         <p>Business insurance is used by the businesses to transfer the risk they face to an insurance company by paying the insurance company a premium.</p>
-        <select name="" id="">
+        <select name="q10" id="">
             <option value="" selected disabled hidden>SELECT OPTION</option>
             <option value="true">True</option>
             <option value="false">False</option>
@@ -210,7 +216,7 @@
   </form>
   <button id="prev_btn">Previous</button>
   <button id="next_btn">Next</button>
-  <button id="submit_btn">Submit</button>
+  <button id="submit_btn" type="button">Submit</button>
 </div>
 
 <script type="text/javascript" src="/javascript/cfeTrainingQuestionsScripts.js"></script>
