@@ -82,11 +82,13 @@ const policyScheduleBlobClient = new BlobServiceClient(
   sharedKeyCredential
 );
 
-const cfeRegistrationTable = new TableClient(
-  `https://${storageAccount}.table.core.windows.net/`,
-  cfeRegistrationTableName,
-  azureSASCredential
-);
+// const cfeRegistrationTable = new TableClient(
+//   `https://${storageAccount}.table.core.windows.net/`,
+//   cfeRegistrationTableName,
+//   azureSASCredential
+// );
+
+const cfeRegistrationTable = createTableClient(storageAccount, cfeRegistrationTableName, azureSASCredential);
 
 // Middleware
 const checkApiKey = (req, res, next) => {
@@ -530,49 +532,36 @@ router.get('/clientPortal', async(req, res, next) => {
 });
 
 router.get('/cfe', async(req, res, next) => {
-  console.log(JSON.stringify(req.cookies))
-  if(req.cookies['cfe-form-completed']){
-    return res.redirect('/cfeRegistered');
-  }
   const xBinuDid = req.query['x-binu-did'];
   if(!xBinuDid){
-    try {
-      return res.redirect('moya://app.moya.biz.training')
-    } catch {
-    return res.response(200).json('Viewed outside of MoyaApp');
-    };
+    return res.redirect('moya://app.moya.biz.training')
   }
-  console.log(`DID: ${xBinuDid}`)
   let userMetaDataMoya = "";
   // Get Client Phone Number from DID Number
-  console.log(`X-BINU-DID: ${xBinuDid}`)
-  try{
+  try {
     userMetaDataMoya = await getMoyaMetaData(xBinuDid);
   } catch (error) {
     console.error('Error getting Moya Meta Data:');
     return res.status(200).json({ success: true, message: 'Moya id invalid' });
   }
-  console.log(`CLIENT MOYA DATA: ${JSON.stringify(userMetaDataMoya)}`);
-  console.log(`CLIENT NUMBER: ${userMetaDataMoya.number}`)
-  const clientNumber = userMetaDataMoya.number;
+  try {
+    const entity = await cfeRegistrationTable.getEntity("", userMetaDataMoya.number);
+    return res.render('cfeTraining', {number: userMetaDataMoya.number});
+  } catch (error) {/* pass */ }
   return res.render(
     'cfeCampaign',
     {
       xBinuDid: xBinuDid,
-      number: clientNumber,
+      number: userMetaDataMoya.number,
     }
   );
 });
 
-router.get('/cfeRegistered', async(req, res, next) => {
+router.get('/cfeRegistered', async (req, res, next) => {
   return res.render('cfeRegistered');
 });
 
 router.get('/cfeTraining', async(req, res) => {
-  // const xBinuDid = req.query['x-binu-did'];
-  //   if(!xBinuDid){
-  //       return res.status(200).json({ success: true, message: 'Viewed outside of MoyaApp' });
-  //   }
   res.render('cfeTraining');
 });
 
@@ -611,7 +600,10 @@ router.get('/cfe-training-serve-video', (req, res) => {
 });
 
 router.get('/cfeTrainingQuestions', async(req, res) => {
-  res.render('cfeTrainingQuestions');
+  console.log("TESTING WHERE ERROR IS")
+  // Get number parameter
+  const number = req.query['number'];
+  res.render('cfeTrainingQuestions', {number});
 });
 
 router.get('/api/health', (req, res, next) => {
@@ -1213,5 +1205,8 @@ async function addSequentialRow(tableClient, data) {
 
   return createEntityResponse;
 }
+
+function createTableClient(storageAcc, tableName, cred){
+  return new TableClient(`https://${storageAcc}.table.core.windows.net/`,tableName,cred)}
 
 module.exports = router;

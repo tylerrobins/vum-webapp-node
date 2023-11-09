@@ -2,6 +2,7 @@
 <head>
     <link rel='stylesheet' href='/stylesheets/cfeTraining.css'/>
 </head>
+
 <body>
     <div id="videoContainer">
         <video  id="cfeTrainingVideo" controls>
@@ -22,7 +23,7 @@
                 <img src="/images/medal.png" alt="Medal Image">
             </div>
             <div class="modal-footer">
-                <button class="modalButton" id="goToQuiz">ATTEMPT THE QUIZ</button>
+                <button class="modalButton" id="goToQuiz" data-number="<%- number %>">ATTEMPT THE QUIZ</button>
                 <button class="modalButton" id="closeModalButton">GO BACK TO VIDEO</button>
             </div>
         </div>

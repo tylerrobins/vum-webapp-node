@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const modal = document.getElementById('customModal');
     const quizButton = document.getElementById('goToQuiz');
     const cfeVideo = document.getElementById('cfeTrainingVideo');
+    const number = quizButton.getAttribute('data-number');
 
     // Event Listeners
     videoElement.addEventListener('ended', videoEndedHandler);
@@ -45,7 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
     
-
     function resizeCheck() {
         // Check if the orientation is now landscape
         if (window.innerHeight < window.innerWidth) {
@@ -78,7 +78,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function goToQuiz() {
-        window.location.href = '/cfeTrainingQuestions';
+        try{
+            window.location.href = '/cfeTrainingQuestions?number='+ number;
+        } catch (err) {
+            window.location.href = '/cfeTrainingQuestions';
+        }
     }
 
     // Fullscreen function  
