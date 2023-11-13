@@ -485,6 +485,24 @@ router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
   const data = req.body;
 
   console.log(`DATA: ${JSON.stringify(data)}`)
+
+  // Check answers for each question
+  let correctAnswers = 0;
+  if (data.q1 == "partnership") correctAnswers++;
+  if (data.q2.includes("individual") && data.q2.includes("employer") && data.q2.includes("business_owner")) correctAnswers++;
+  if (data.q3 == "false") correctAnswers++;
+  if (data.q4 == "q4option3") correctAnswers++;
+  if (data.q5 == "q5option2") correctAnswers++;
+  if (data.q6 == "q6option4") correctAnswers++;
+  if (data.q7 == "true") correctAnswers++;
+  let q8Correct = true;
+  if (data.q8.step1 !== "calc_revenue") { q8Correct = false; } 
+  else if (data.q8.step2 !== "id_list_expenses") { q8Correct = false; } 
+  else if (data.q8.step3 !== "budget_big_costs") { q8Correct = false; }
+  if (q8Correct) correctAnswers++;
+  if (data.q9 == "true") correctAnswers++;
+  if (data.q10 == "true") correctAnswers++;
+
   // Create/Update CFE Training Quiz Record Table in Azure Table Storage
   let cfeQuizData;
   try {
@@ -512,34 +530,20 @@ router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
     }
     let newEntityData = await cfeQuizTableResults.createEntity( cfeQuizData );
   }
-
-  // Check answers for each question
-  let correctAnswers = 0;
-  if (data.q1 == "partnership") correctAnswers++;
-  if (data.q2.includes("individual") && data.q2.includes("employer") && data.q2.includes("business_owner")) correctAnswers++;
-  if (data.q3 == "false") correctAnswers++;
-  if (data.q4 == "q4option3") correctAnswers++;
-  if (data.q5 == "q5option2") correctAnswers++;
-  if (data.q6 == "q6option4") correctAnswers++;
-  if (data.q7 == "true") correctAnswers++;
-  let q8Correct = true;
-  if (data.q8.step1 !== "calc_revenue") { q8Correct = false; } 
-  else if (data.q8.step2 !== "id_list_expenses") { q8Correct = false; } 
-  else if (data.q8.step3 !== "budget_big_costs") { q8Correct = false; }
-  if (q8Correct) correctAnswers++;
-  if (data.q9 == "true") correctAnswers++;
-  if (data.q10 == "true") correctAnswers++;
+  cfeQuizData.correctAnswers = correctAnswers;
 
   if(correctAnswers == 10){
     const filename = `CFE Certificate - ${data.nameSurname}.pdf`;
     const pdfURL = await getAndFillCFECertificatePDF(data, filename)
-
-    const message = `Congratulations ${data.nameSurname}, you have passed the CFE Training Quiz. Please click on the link below to download your certificate.`;
+    const message = `Congratulations ${data.nameSurname}, you have passed the CFE Training Quiz. Please click on the link to download your certificate.`;
     await uploadFileAndSendMessage(pdfURL, data.phoneNumber, message)
       .catch((error) => {
       console.error("Error uploading File and sending message to Moya:", error);
     });
+    cfeQuizData.certificateUrl = pdfURL;
+    cfeQuizData.certificateSent = true;
   }
+  cfeQuizTableResults.updateEntity(cfeQuizData);
   res.status(200).json({ success: true, correctAnswers });
 });
 
