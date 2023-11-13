@@ -352,7 +352,8 @@ router.post('/MoyaPayPaymentCallback/:number', async (req, res, next) => {
   
       clientTableClient.updateEntity(entity);
   
-      await uploadFileAndSendMessage(pdfURL, clientNumber)
+      const message = "Thank you for choosing Santam Business Insurance.\nKindly see below for your policy schedule."
+      await uploadFileAndSendMessage(pdfURL, clientNumber, message)
         .catch((error) => {
         console.error("Error uploading File and sending message to Moya:", error);
       });
@@ -489,7 +490,7 @@ router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
   try {
     cfeQuizData = await cfeQuizTableResults.getEntity("", data.phoneNumber);
   } catch {
-    let newEntity = {
+    let cfeQuizData = {
       partitionKey: "", 
       rowKey: data.phoneNumber, 
       q1: data.q1,
@@ -509,8 +510,7 @@ router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
       idNumber: data.idNumber,
       nameSurname: data.nameSurname,
     }
-    console.log(`NEW ENTITY: ${JSON.stringify(newEntity)}`)
-    cfeQuizData = await cfeQuizTableResults.createEntity( newEntity );
+    let newEntityData = await cfeQuizTableResults.createEntity( cfeQuizData );
   }
 
   // Check answers for each question
@@ -531,7 +531,14 @@ router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
   if (data.q10 == "true") correctAnswers++;
 
   if(correctAnswers == 10){
-    // Produce and send certificate
+    const filename = `CFE Certificate - ${data.nameSurname}.pdf`;
+    const pdfURL = await getAndFillCFECertificatePDF(data, filename)
+
+    const message = `Congratulations ${data.nameSurname}, you have passed the CFE Training Quiz. Please click on the link below to download your certificate.`;
+    await uploadFileAndSendMessage(pdfURL, data.phoneNumber, message)
+      .catch((error) => {
+      console.error("Error uploading File and sending message to Moya:", error);
+    });
   }
   res.status(200).json({ success: true, correctAnswers });
 });
@@ -1005,16 +1012,30 @@ async function getAndFillCFECertificatePDF(clientObject, filename){
                   'CFE Certificate - Template.pdf'
                   )
               )
-          ).getForm();
+          );
+
+  const form = pdfDoc.getForm();
   // Get form fiels
-  const nameSurname = pdfDoc.getTextField('Name & Surname');
-  const idNumber = pdfDoc.getTextField('ID Number');
-  const date = pdfDoc.getTextField('Date Completed');
+  const nameSurname = form.getTextField('Name & Surname');
+  const idNumber = form.getTextField('ID Number');
+  const date = form.getTextField('Date Completed');
 
   // Fill out form fields
   nameSurname.setText(clientObject.nameSurname);
   idNumber.setText(clientObject.idNumber);
   date.setText(today);
+
+  form.flatten();
+
+  const pdfBytes_output = await pdfDoc.save();
+
+  const containerClient = policyScheduleBlobClient.getContainerClient(outputContainerName);
+  const blockBlobClient = containerClient.getBlockBlobClient(filename);
+  await blockBlobClient.upload(pdfBytes_output, pdfBytes_output.length);
+  
+  const pdfURL = generateBlobSasUrl(filename, outputContainerName);
+
+  return pdfURL;
 }
 
 function generateBlobSasUrl(blobName, containerName, expiresInDays = 180) {
@@ -1178,7 +1199,7 @@ async function moyaPayCheck(clientNumber){
   }
 }
 
-async function uploadFileAndSendMessage(fileUrl, phoneNumber) {
+async function uploadFileAndSendMessage(fileUrl, phoneNumber, messageString) {
   try {
     // Step 1: Upload the file
     const data = new FormData();
@@ -1214,7 +1235,7 @@ async function uploadFileAndSendMessage(fileUrl, phoneNumber) {
       "recipient_type": "individual",
       "type": "text",
       "text": {
-        "body": "Thank you for choosing Santam Business Insurance.\nKindly see below for your policy schedule."
+        "body": messageString
       }
     });
     
