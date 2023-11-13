@@ -506,7 +506,8 @@ router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
       q8step3: data.q8.step3,
       q9: data.q9,
       q10: data.q10,
-      idNumber: data.q11
+      idNumber: data.idNumber,
+      nameSurname: data.nameSurname,
     }
     console.log(`NEW ENTITY: ${JSON.stringify(newEntity)}`)
     cfeQuizData = await cfeQuizTableResults.createEntity( newEntity );
@@ -1004,7 +1005,16 @@ async function getAndFillCFECertificatePDF(clientObject, filename){
                   'CFE Certificate - Template.pdf'
                   )
               )
-          );
+          ).getForm();
+  // Get form fiels
+  const nameSurname = pdfDoc.getTextField('Name & Surname');
+  const idNumber = pdfDoc.getTextField('ID Number');
+  const date = pdfDoc.getTextField('Date Completed');
+
+  // Fill out form fields
+  nameSurname.setText(clientObject.nameSurname);
+  idNumber.setText(clientObject.idNumber);
+  date.setText(today);
 }
 
 function generateBlobSasUrl(blobName, containerName, expiresInDays = 180) {

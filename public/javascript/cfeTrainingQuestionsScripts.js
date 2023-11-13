@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const form = document.getElementById('quizForm');
     const loadingSpinner = document.getElementById('loadingSpinner');
-    document.getElementById('submit_btn').addEventListener('click', async (event) => {runFormSubmit(event, form, loadingSpinner)});
+    document.getElementById('submit_btn').addEventListener('click', async (event) => {runFormSubmit(event, form, loadingSpinner, currentQuestion)});
 
     // Add event listeners to the dropdowns
     document.getElementById('q8option1').addEventListener('change', () => updateDropdowns('q8option1'));
@@ -138,7 +138,9 @@ function hasAnswerBeenGiven(questionNumber) {
             // Ensure answer for question 11 is not empty
             // <input type="text" name="id_number" id="id_number" placeholder="ID/Passport Number" maxlength="13" required>
             var id_number = document.getElementById('id_number');
-            if (!id_number.value === "" || !id_number.value === null) {
+            var name_surname = document.getElementById('name_surname');
+            console.log(`id_number: ${id_number.value}, name_surname: ${name_surname.value}`)
+            if ((id_number.value !== null && id_number.value !== "") && (name_surname.value !== null && name_surname.value !== "")){
                 answered = true;
             }
             break;
@@ -222,7 +224,12 @@ function loadQuiz(){
     document.getElementById('start_quiz').style.display = 'none';
 }
 
-async function runFormSubmit(eventPara, formObj, spinnerObj){
+async function runFormSubmit(eventPara, formObj, spinnerObj, questionNumber){
+    let hasAnswer = hasAnswerBeenGiven(questionNumber);
+    if(!hasAnswer){
+        // Exit runFormSubmit Function
+        return;
+    }
     eventPara.preventDefault();
     const formData = new FormData(formObj);
     spinnerObj.style.display = 'flex';
@@ -237,7 +244,8 @@ async function runFormSubmit(eventPara, formObj, spinnerObj){
     const q8 = {"step1": formData.get('q8option1'), "step2": formData.get('q8option2'), "step3":formData.get('q8option3')};
     const q9 = formData.get('q9');
     const q10 = formData.get('q10');
-    const q11 = formData.get('id_number');
+    const idNumber = formData.get('id_number');
+    const nameSurname = formData.get('name_surname');
 
     const url = `/api/cfeTrainingQuiz`;
     try {
@@ -247,7 +255,7 @@ async function runFormSubmit(eventPara, formObj, spinnerObj){
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ phoneNumber, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11}),
+            body: JSON.stringify({ phoneNumber, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idNumber, nameSurname}),
         });
         if (response.ok) {
             const data = await response.json();
