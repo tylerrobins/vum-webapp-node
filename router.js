@@ -474,9 +474,6 @@ router.post('/api/cfe', async(req, res, next) => {
     await cfeRegistrationTable.createEntity(uploadData);
   }
   
-  // Set the cookie to last for 2 months
-  res.cookie('cfe-form-completed', 'true', { maxAge: 5184000000, httpOnly: true });
-  
   return res.status(200).json({ success: true });
 });
 
@@ -526,17 +523,20 @@ router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
       q9: data.q9,
       q10: data.q10,
       idNumber: data.idNumber,
-      nameSurname: data.nameSurname,
     }
     let newEntityData = await cfeQuizTableResults.createEntity( cfeQuizData );
   }
   cfeQuizData.correctAnswers = correctAnswers;
 
   if(correctAnswers == 10){
-    const filename = `CFE Certificate - ${data.nameSurname}.pdf`;
-    const pdfURL = await getAndFillCFECertificatePDF(data, filename)
-    const message = `Congratulations ${data.nameSurname}, you have passed the CFE Training Quiz. Please click on the link to download your certificate.`;
-    await uploadFileAndSendMessage(pdfURL, data.phoneNumber, message)
+    const cfeRegistrationTableEntity = await cfeRegistrationTable.getEntity("", data.phoneNumber);
+    cfeRegistrationTableEntity.cfeTrainingCompleted = true;
+    await cfeRegistrationTable.updateEntity(cfeRegistrationTableEntity);
+    cfeQuizData.nameSurname = cfeRegistrationTableEntity.nameSurname;
+    const filename = `CFE Certificate - ${cfeQuizData.nameSurname}.pdf`;
+    const pdfURL = await getAndFillCFECertificatePDF(cfeQuizData, filename)
+    const message = `Congratulations ${cfeQuizData.nameSurname}, you have passed the CFE Training Quiz. Please click on the link to download your certificate.`;
+    await uploadFileAndSendMessage(pdfURL, cfeQuizData.rowKey, message)
       .catch((error) => {
       console.error("Error uploading File and sending message to Moya:", error);
     });
@@ -544,7 +544,7 @@ router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
     cfeQuizData.certificateSent = true;
   }
   cfeQuizTableResults.updateEntity(cfeQuizData);
-  res.status(200).json({ success: true, correctAnswers });
+  return res.status(200).json({ success: true, correctAnswers });
 });
 
 // This will run when the client clicks on the "Business Insurance" Tile in the moya app.
@@ -609,10 +609,23 @@ router.get('/cfe', async(req, res, next) => {
     console.error('Error getting Moya Meta Data:');
     return res.status(200).json({ success: true, message: 'Moya id invalid' });
   }
+  
+  // Get CFE Registration Record from Azure Table Storage
   try {
     const entity = await cfeRegistrationTable.getEntity("", userMetaDataMoya.number);
     console.log(`ENTITY: ${JSON.stringify(entity)}`)
-    return res.render('cfeTraining', {number : entity.rowKey});
+    if (entity.cfeTrainingCompleted){
+      return res.render('cfeTrainingCompleted');
+    }
+    // TO BE ADDED BACK TO ROLL OUT
+    // return res.render('cfeTraining', {number : entity.rowKey});
+    // TO BE REMOVED ONCE TESTED
+    if (entity.admin){
+      return res.render('cfeTraining', {number : entity.rowKey});
+    } else {
+      return res.render('cfeRegistered');
+    }
+    // END OF BLOCK TO BE REMOVED ONCE TESTED
   } catch (error) {
     console.log(`ERROR: ${error}`);
   }
@@ -671,10 +684,11 @@ router.get('/cfe-training-serve-video', (req, res) => {
 router.get('/cfeTrainingQuestions', async(req, res) => {
   // Get number parameter
   const number = req.query['number'];
+  const name_surname = req.query['name_surname'];
   if(!number){
     return res.status(400).send('Missing number parameter');
   }
-  res.render('cfeTrainingQuestions', {number});
+  res.render('cfeTrainingQuestions', {number, name_surname});
 });
 
 router.get('/api/health', (req, res, next) => {

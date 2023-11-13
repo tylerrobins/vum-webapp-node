@@ -138,9 +138,12 @@ function hasAnswerBeenGiven(questionNumber) {
             // Ensure answer for question 11 is not empty
             // <input type="text" name="id_number" id="id_number" placeholder="ID/Passport Number" maxlength="13" required>
             var id_number = document.getElementById('id_number');
-            var name_surname = document.getElementById('name_surname');
-            console.log(`id_number: ${id_number.value}, name_surname: ${name_surname.value}`)
-            if ((id_number.value !== null && id_number.value !== "") && (name_surname.value !== null && name_surname.value !== "")){
+            // var name_surname = document.getElementById('name_surname');
+            // console.log(`id_number: ${id_number.value}, name_surname: ${name_surname.value}`)
+            // if ((id_number.value !== null && id_number.value !== "") && (name_surname.value !== null && name_surname.value !== "")){
+            //     answered = true;
+            // }
+            if (id_number.value !== null && id_number.value !== ""){
                 answered = true;
             }
             break;
@@ -245,7 +248,6 @@ async function runFormSubmit(eventPara, formObj, spinnerObj, questionNumber){
     const q9 = formData.get('q9');
     const q10 = formData.get('q10');
     const idNumber = formData.get('id_number');
-    const nameSurname = formData.get('name_surname');
 
     const url = `/api/cfeTrainingQuiz`;
     try {
@@ -255,7 +257,7 @@ async function runFormSubmit(eventPara, formObj, spinnerObj, questionNumber){
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ phoneNumber, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idNumber, nameSurname}),
+            body: JSON.stringify({ phoneNumber, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idNumber}),
         });
         if (response.ok) {
             const data = await response.json();

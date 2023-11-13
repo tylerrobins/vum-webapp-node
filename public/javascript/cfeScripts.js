@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const data = await response.json();
           console.log('Success:', data);
           //Redirect to CFE registered page
-          window.location.href = '/cfeRegistered';
+          window.location.href = `/cfe?x-binu-did=${didNumber}`;
           return true;
         } else {
           console.error('Error:', response.statusText);

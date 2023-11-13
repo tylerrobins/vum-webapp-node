@@ -18,9 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
     cfeVideo.addEventListener('play', orientationCheck);
     window.addEventListener('resize', resizeCheck);
     cfeVideo.addEventListener('ended', exitFullscreen);
-    // document.getElementById('redirectToQuestions').addEventListener('click', function() {
-    //     window.location.href = '/cfeTrainingQuestions';
-    // });
     
     // window.addEventListener("click", fullscreen, { once: true });
     window.addEventListener('orientationchange', orientationChangeHandler);
@@ -79,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function goToQuiz() {
         try{
-            window.location.href = '/cfeTrainingQuestions?number='+ number;
+            window.location.href = `/cfeTrainingQuestions?number=${number}` ;
         } catch (err) {
             window.location.href = '/cfeTrainingQuestions';
         }
