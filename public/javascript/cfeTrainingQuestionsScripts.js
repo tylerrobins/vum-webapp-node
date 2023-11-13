@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     start_quiz.addEventListener('click', loadQuiz);
 
     let currentQuestion = 1; // This is in the scope of the DOMContentLoaded callback
-    let phoneNumber = document.getElementById('phoneNumber').value;
+    let phoneNumber = document.getElementById('phoneNumber').getAttribute('value');
 
     // Use a closure to access and update currentQuestion
     document.getElementById('next_btn').addEventListener('click', () => {
@@ -10,12 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if(answered){
             currentQuestion = nextQuestion(currentQuestion); // Update the currentQuestion with the new value returned by the function
         }
-        console.log(currentQuestion);
     });
 
     document.getElementById('prev_btn').addEventListener('click', () => {
         currentQuestion = prevQuestion(currentQuestion); // Same for prevQuestion if you have it
-        console.log(currentQuestion);
     });
 
     const form = document.getElementById('quizForm');
@@ -27,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('q8option2').addEventListener('change', () => updateDropdowns('q8option2'));  
 
     // Set actions for result after quiz results have been shown.
-    document.getElementById('restart_training_vid').addEventListener('click', () => { window.location.href = '/cfeTraining/'+ phoneNumber; });
-    document.getElementById('restart_quiz').addEventListener('click', () => { window.location.href = '/cfeTrainingQuestions/'+ phoneNumber; });
+    document.getElementById('restart_training_vid').addEventListener('click', () => { window.location.href = '/cfeTraining?number='+ phoneNumber; });
+    document.getElementById('restart_quiz').addEventListener('click', () => { window.location.href = '/cfeTrainingQuestions?number='+ phoneNumber; });
     document.getElementById('chat_btn').addEventListener('click', () => { window.location.href = 'moya://27700008020'; });
 
     // Add event listeners for when the orientation might change
@@ -117,7 +115,6 @@ function hasAnswerBeenGiven(questionNumber) {
         case 5: 
         case 6:
             var radios = document.getElementById('question' + questionNumber).querySelectorAll('input[type="radio"]');
-            console.log(JSON.stringify(radios))
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].checked) {
                     answered = true;
@@ -131,7 +128,6 @@ function hasAnswerBeenGiven(questionNumber) {
             answered = true;
             // Loop through the NodeList and check each select
             for (var i = 0; i < selects.length; i++) {
-                console.log(`Select ${i} value: ${selects[i].value}`)  
                 if (selects[i].value === "" || selects[i].value === null) {
                     answered = false;
                     break; // Stop the loop as we found a non-selected dropdown
@@ -253,10 +249,8 @@ async function runFormSubmit(eventPara, formObj, spinnerObj){
             },
             body: JSON.stringify({ phoneNumber, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11}),
         });
-        console.log(response);
         if (response.ok) {
             const data = await response.json();
-            console.log('Success:', data);
             // Handle successful & failed quiz's
             document.getElementById('question11').style.display = 'none';
             document.getElementById('next_btn').style.display = 'none';
@@ -264,12 +258,10 @@ async function runFormSubmit(eventPara, formObj, spinnerObj){
             document.getElementById('submit_btn').style.display = 'none';
             if (data.correctAnswers == 10) {
                 document.getElementById('succesful_quiz_div').style.display = 'block';
-                console.log("passed")
             } else {
                 document.getElementById('failed_quiz_div').style.display = 'block';
                 let quizResult = document.getElementById("quiz_result");
                 quizResult.textContent = data.correctAnswers;
-                console.log("failed")
             }
           } else {
             console.error('Error:', response.statusText);

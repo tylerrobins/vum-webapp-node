@@ -12,6 +12,7 @@ const tempalte_path = path.join(__dirname, "./templates");
 
 const { TableClient, AzureSASCredential } = require("@azure/data-tables");
 const { BlobServiceClient, StorageSharedKeyCredential, generateBlobSASQueryParameters, BlobSASPermissions, SASProtocol  } = require("@azure/storage-blob");
+const { create } = require('domain');
 
 // Azure Authentication client variables
 const storageAccount = "vumbotstorage";
@@ -82,11 +83,7 @@ const policyScheduleBlobClient = new BlobServiceClient(
   sharedKeyCredential
 );
 
-// const cfeRegistrationTable = new TableClient(
-//   `https://${storageAccount}.table.core.windows.net/`,
-//   cfeRegistrationTableName,
-//   azureSASCredential
-// );
+const cfeQuizTableResults = createTableClient(storageAccount, "cfeTrainingAnswers", azureSASCredential);
 
 const cfeRegistrationTable = createTableClient(storageAccount, cfeRegistrationTableName, azureSASCredential);
 
@@ -345,7 +342,7 @@ router.post('/MoyaPayPaymentCallback/:number', async (req, res, next) => {
     const entity = await clientTableClient.getEntity("", clientNumber);
     if (entity.dataPopulated){
       const filename = `Santam Emerging Business Insurance Policy Schedule Inception - ${entity.policyNumber}.pdf`;
-      const pdfURL = await getAndFillPDF(entity, filename);
+      const pdfURL = await getAndFillInceptionPDF(entity, filename);
   
       console.log(`PDF URL: ${JSON.stringify(pdfURL)}`)
   
@@ -486,8 +483,34 @@ router.post('/api/cfe', async(req, res, next) => {
 router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
   const data = req.body;
 
+  console.log(`DATA: ${JSON.stringify(data)}`)
   // Create/Update CFE Training Quiz Record Table in Azure Table Storage
-  // CODE TO BE ADDED
+  let cfeQuizData;
+  try {
+    cfeQuizData = await cfeQuizTableResults.getEntity("", data.phoneNumber);
+  } catch {
+    let newEntity = {
+      partitionKey: "", 
+      rowKey: data.phoneNumber, 
+      q1: data.q1,
+      q2a1: data.q2[0],
+      q2a2: data.q2[1],
+      q2a3: data.q2[2],
+      q3: data.q3,
+      q4: data.q4,
+      q5: data.q5,
+      q6: data.q6,
+      q7: data.q7,
+      q8step1: data.q8.step1,
+      q8step2: data.q8.step2,
+      q8step3: data.q8.step3,
+      q9: data.q9,
+      q10: data.q10,
+      idNumber: data.q11
+    }
+    console.log(`NEW ENTITY: ${JSON.stringify(newEntity)}`)
+    cfeQuizData = await cfeQuizTableResults.createEntity( newEntity );
+  }
 
   // Check answers for each question
   let correctAnswers = 0;
@@ -498,16 +521,17 @@ router.post('/api/cfeTrainingQuiz', async(req, res, next) => {
   if (data.q5 == "q5option2") correctAnswers++;
   if (data.q6 == "q6option4") correctAnswers++;
   if (data.q7 == "true") correctAnswers++;
-  
   let q8Correct = true;
   if (data.q8.step1 !== "calc_revenue") { q8Correct = false; } 
   else if (data.q8.step2 !== "id_list_expenses") { q8Correct = false; } 
   else if (data.q8.step3 !== "budget_big_costs") { q8Correct = false; }
-  
   if (q8Correct) correctAnswers++;
   if (data.q9 == "true") correctAnswers++;
   if (data.q10 == "true") correctAnswers++;
 
+  if(correctAnswers == 10){
+    // Produce and send certificate
+  }
   res.status(200).json({ success: true, correctAnswers });
 });
 
@@ -575,8 +599,11 @@ router.get('/cfe', async(req, res, next) => {
   }
   try {
     const entity = await cfeRegistrationTable.getEntity("", userMetaDataMoya.number);
-    return res.render('cfeTraining', {number: userMetaDataMoya.number});
-  } catch (error) {/* pass */ }
+    console.log(`ENTITY: ${JSON.stringify(entity)}`)
+    return res.render('cfeTraining', {number : entity.rowKey});
+  } catch (error) {
+    console.log(`ERROR: ${error}`);
+  }
   return res.render(
     'cfeCampaign',
     {
@@ -817,11 +844,11 @@ async function getNextPolicyNumber() {
   }
 }
 
-async function getAndFillPDF(clientObject, filename){
+async function getAndFillInceptionPDF(clientObject, filename){
   const outputContainerName = "policy-schedules";
   const today = formatString(new Date());
   console.log(`Today's date: ${today}`)
-  console.log("getAndFillPDF")
+  console.log("getAndFillInceptionPDF")
   const pdfDoc = 
       await PDFDocument.load(
           fs.readFileSync(
@@ -962,6 +989,22 @@ async function getAndFillPDF(clientObject, filename){
   const pdfURL = generateBlobSasUrl(filename, outputContainerName);
 
   return pdfURL;
+}
+
+async function getAndFillCFECertificatePDF(clientObject, filename){
+  const outputContainerName = "cfe-certificates";
+  const today = formatString(new Date());
+  console.log(`Today's date: ${today}`)
+  console.log("getAndFillCFECertificatePDF")
+  const pdfDoc = 
+      await PDFDocument.load(
+          fs.readFileSync(
+              path.join(
+                  tempalte_path, 
+                  'CFE Certificate - Template.pdf'
+                  )
+              )
+          );
 }
 
 function generateBlobSasUrl(blobName, containerName, expiresInDays = 180) {
@@ -1238,7 +1281,8 @@ async function addSequentialRow(tableClient, data) {
   return createEntityResponse;
 }
 
-function createTableClient(storageAcc, tableName, cred){
-  return new TableClient(`https://${storageAcc}.table.core.windows.net/`,tableName,cred)}
+function createTableClient(storageAcc, tableName, cred) {
+  return new TableClient(`https://${storageAcc}.table.core.windows.net/`,tableName,cred)
+}
 
 module.exports = router;
