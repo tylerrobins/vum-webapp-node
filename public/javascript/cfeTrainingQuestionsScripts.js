@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('submit_btn').addEventListener('click', async (event) => {runFormSubmit(event, form, loadingSpinner, currentQuestion)});
 
     // Add event listeners to the dropdowns
-    document.getElementById('q8option1').addEventListener('change', () => updateDropdowns('q8option1'));
-    document.getElementById('q8option2').addEventListener('change', () => updateDropdowns('q8option2'));  
+    // document.getElementById('q8option1').addEventListener('change', () => updateDropdowns('q8option1'));
+    // document.getElementById('q8option2').addEventListener('change', () => updateDropdowns('q8option2'));  
 
     // Set actions for result after quiz results have been shown.
     document.getElementById('restart_training_vid').addEventListener('click', () => { window.location.href = '/cfeTraining?number='+ phoneNumber; });
@@ -114,6 +114,7 @@ function hasAnswerBeenGiven(questionNumber) {
         case 4:
         case 5: 
         case 6:
+        case 8:
             var radios = document.getElementById('question' + questionNumber).querySelectorAll('input[type="radio"]');
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].checked) {
@@ -122,18 +123,18 @@ function hasAnswerBeenGiven(questionNumber) {
                 }
             } 
             break;
-        case 8:
-            // Get all select elements with the class 'order-select'
-            var selects = document.querySelectorAll('.order-select');
-            answered = true;
-            // Loop through the NodeList and check each select
-            for (var i = 0; i < selects.length; i++) {
-                if (selects[i].value === "" || selects[i].value === null) {
-                    answered = false;
-                    break; // Stop the loop as we found a non-selected dropdown
-              }
-            }
-            break;
+        // case 8:
+        //     // Get all select elements with the class 'order-select'
+        //     var selects = document.querySelectorAll('.order-select');
+        //     answered = true;
+        //     // Loop through the NodeList and check each select
+        //     for (var i = 0; i < selects.length; i++) {
+        //         if (selects[i].value === "" || selects[i].value === null) {
+        //             answered = false;
+        //             break; // Stop the loop as we found a non-selected dropdown
+        //       }
+        //     }
+        //     break;
         case 11:
             // Ensure answer for question 11 is not empty
             // <input type="text" name="id_number" id="id_number" placeholder="ID/Passport Number" maxlength="13" required>
@@ -155,60 +156,60 @@ function hasAnswerBeenGiven(questionNumber) {
     return answered;
 }
 
-function updateDropdowns(selectedDropdown) {
-    var q8option1 = document.getElementById('q8option1');
-    var q8option2 = document.getElementById('q8option2');
-    var q8option3 = document.getElementById('q8option3');
+// function updateDropdowns(selectedDropdown) {
+//     var q8option1 = document.getElementById('q8option1');
+//     var q8option2 = document.getElementById('q8option2');
+//     var q8option3 = document.getElementById('q8option3');
   
-    // Only update the options for the dropdowns that come after the one that was changed
-    if (selectedDropdown === 'q8option1') {
-        recreateOptions(q8option2, [q8option1.value], q8option2.value);
-        recreateOptions(q8option3, [q8option1.value, q8option2.value], q8option3.value);
-    } else if (selectedDropdown === 'q8option2') {
-        recreateOptions(q8option3, [q8option1.value, q8option2.value], q8option3.value);
-    }    
-}
+//     // Only update the options for the dropdowns that come after the one that was changed
+//     if (selectedDropdown === 'q8option1') {
+//         recreateOptions(q8option2, [q8option1.value], q8option2.value);
+//         recreateOptions(q8option3, [q8option1.value, q8option2.value], q8option3.value);
+//     } else if (selectedDropdown === 'q8option2') {
+//         recreateOptions(q8option3, [q8option1.value, q8option2.value], q8option3.value);
+//     }    
+// }
   
-function recreateOptions(dropdown, excludeValues, selectedValue) {
-    // Define the options available
-    var options = [
-      { value: "budget_big_costs", text: "Budget for big costs" },
-      { value: "id_list_expenses", text: "Identify and list all expenses" },
-      { value: "calc_revenue", text: "Calculate revenue" }
-    ];
+// function recreateOptions(dropdown, excludeValues, selectedValue) {
+//     // Define the options available
+//     var options = [
+//       { value: "budget_big_costs", text: "Budget for big costs" },
+//       { value: "id_list_expenses", text: "Identify and list all expenses" },
+//       { value: "calc_revenue", text: "Calculate revenue" }
+//     ];
   
-    // Filter out options that should be excluded
-    var filteredOptions = options.filter(function(opt) {
-      return !excludeValues.includes(opt.value);
-    });
+//     // Filter out options that should be excluded
+//     var filteredOptions = options.filter(function(opt) {
+//       return !excludeValues.includes(opt.value);
+//     });
   
-    // Clear existing options
-    dropdown.innerHTML = '';
+//     // Clear existing options
+//     dropdown.innerHTML = '';
   
-    // Add the default placeholder option
-    var placeholderOption = document.createElement("option");
-    placeholderOption.value = "";
-    placeholderOption.text = "SELECT OPTION";
-    placeholderOption.disabled = true;
-    placeholderOption.hidden = true;
-    dropdown.appendChild(placeholderOption);
+//     // Add the default placeholder option
+//     var placeholderOption = document.createElement("option");
+//     placeholderOption.value = "";
+//     placeholderOption.text = "SELECT OPTION";
+//     placeholderOption.disabled = true;
+//     placeholderOption.hidden = true;
+//     dropdown.appendChild(placeholderOption);
   
-    // Add new options, excluding any that are in the excludeValues array
-    filteredOptions.forEach(function(opt) {
-      var newOption = document.createElement("option");
-      newOption.value = opt.value;
-      newOption.text = opt.text;
-      dropdown.appendChild(newOption);
-    });
+//     // Add new options, excluding any that are in the excludeValues array
+//     filteredOptions.forEach(function(opt) {
+//       var newOption = document.createElement("option");
+//       newOption.value = opt.value;
+//       newOption.text = opt.text;
+//       dropdown.appendChild(newOption);
+//     });
   
-    // If there is only one option left, select it by default, unless it was already selected before
-    if (filteredOptions.length === 1 && !selectedValue) {
-      dropdown.value = filteredOptions[0].value;
-    } else {
-      // Otherwise, set the value to the previous selection or leave it at the placeholder
-      dropdown.value = excludeValues.includes(selectedValue) ? "" : selectedValue;
-    }
-}
+//     // If there is only one option left, select it by default, unless it was already selected before
+//     if (filteredOptions.length === 1 && !selectedValue) {
+//       dropdown.value = filteredOptions[0].value;
+//     } else {
+//       // Otherwise, set the value to the previous selection or leave it at the placeholder
+//       dropdown.value = excludeValues.includes(selectedValue) ? "" : selectedValue;
+//     }
+// }
 
 function checkOrientation() {
     if (window.innerHeight < window.innerWidth) {
@@ -244,7 +245,8 @@ async function runFormSubmit(eventPara, formObj, spinnerObj, questionNumber){
     const q5 = formData.get('disadv_shareholding_finance');
     const q6 = formData.get('insurance_advice');
     const q7 = formData.get('q7');
-    const q8 = {"step1": formData.get('q8option1'), "step2": formData.get('q8option2'), "step3":formData.get('q8option3')};
+    // const q8 = {"step1": formData.get('q8option1'), "step2": formData.get('q8option2'), "step3":formData.get('q8option3')};
+    const q8 = formData.get('budget_planning');
     const q9 = formData.get('q9');
     const q10 = formData.get('q10');
     const idNumber = formData.get('id_number');
@@ -266,12 +268,14 @@ async function runFormSubmit(eventPara, formObj, spinnerObj, questionNumber){
             document.getElementById('next_btn').style.display = 'none';
             document.getElementById('prev_btn').style.display = 'none';
             document.getElementById('submit_btn').style.display = 'none';
-            if (data.correctAnswers == 10) {
+            let quizResult = document.querySelectorAll(".quiz_result");
+            quizResult.forEach( i => {
+                i.textContent = data.correctAnswers;
+            });
+            if (data.correctAnswers > 6) {
                 document.getElementById('succesful_quiz_div').style.display = 'block';
             } else {
                 document.getElementById('failed_quiz_div').style.display = 'block';
-                let quizResult = document.getElementById("quiz_result");
-                quizResult.textContent = data.correctAnswers;
             }
           } else {
             console.error('Error:', response.statusText);

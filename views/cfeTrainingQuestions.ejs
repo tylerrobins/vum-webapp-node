@@ -1,4 +1,4 @@
-<%- include('header.ejs') -%>
+<%- include('cfeHeader.ejs') -%>
 <head>
     <link rel='stylesheet' href='/stylesheets/cfeTrainingQuestions.css'/>
 </head>
@@ -7,7 +7,6 @@
   <div class="spinner"></div>
   <p id="fetchingDetails">Submitting Answers...</p>
 </div>
-
 
 <div class="all-question-container">
   <div id="on_load_div" class="question-container active">
@@ -34,8 +33,7 @@
       <div id="question2" class="question-container">
         <h1>Question 2</h1>
         <p>Select all answers that apply.</p>
-        <p>As the owner of a small or micro business, you need to plan for the financial needs of the three roles you perform in the operation of your business</p>
-        <p>What are these three roles?</p>
+        <p>As a small business owner, what are the three roles you play in managing your business's finances?</p>
         <div class="multi-checkboxes">
         <label for="individual">
           <input type="checkbox" id="individual" name="category[]" value="individual">
@@ -49,18 +47,10 @@
           <input type="checkbox" id="employer" name="category[]" value="employer">
           Employer
         </label>
-        <label for="dependent">
-          <input type="checkbox" id="dependent" name="category[]" value="dependent">
-          Dependent
-        </label>
         <label for="business_owner">
           <input type="checkbox" id="business_owner" name="category[]" value="business_owner">
           Business Owner
         </label>
-        <label for="employee">
-          <input type="checkbox" id="employee" name="category[]" value="employee">
-          Employee
-        </label><br>
         </div>
       </div>
 
@@ -126,7 +116,7 @@
       <div id="question6" class="question-container">
         <h1>Question 6</h1>
         <p>Select the correct answer.</p>
-        <p>Who should business owners talk to for proper advice on the short-term insurance products that will suit their business?</p>
+        <p>Who can give business owners the best advice about insurance that's right for their business in the short-term?</p>
         <div class="single-select-checkbox">
         <label for="q6option1">
           <input type="radio" id="q6option1" name="insurance_advice" value="q6option1">
@@ -142,7 +132,7 @@
         </label>
         <label for="q6option4">
           <input type="radio" id="q6option4" name="insurance_advice" value="q6option4">
-          An accredited short-term broker
+          An accredited short-term insurance broker
         </label><br>
         </div>
       </div>
@@ -160,7 +150,22 @@
 
       <div id="question8" class="question-container">
         <h1>Question 8</h1>
-        <p>Order the options:</p>
+        <p>What are the 3 steps involved in drawing up a business budget?</p>
+        <div class="single-select-checkbox">
+          <label for="q8option1">
+            <input type="radio" id="q8option1" name="budget_planning" value="q8option1">
+            Calculate net profit goals, Identify major revenue streams, Focus on profit margins
+          </label>
+          <label for="q8option2">
+            <input type="radio" id="q8option2" name="budget_planning" value="q8option2">
+            Get quotes for projects, Work out gross margin, Forecast revenue
+          </label>
+          <label for="q8option3">
+            <input type="radio" id="q8option3" name="budget_planning" value="q8option3">
+            Budget for big costs, Identify and list all expenses, Calculate revenue
+          </label>
+          </div>
+        <!-- <p>Select the correct order for drawing a business budget:</p>
         <label for="q8option1">STEP 1:</label>
         <select name="q8option1" id="q8option1" class="order-select">
             <option value="" selected disabled hidden>SELECT OPTION</option>
@@ -181,7 +186,7 @@
             <option value="budget_big_costs">Budget for big costs</option>
             <option value="id_list_expenses">Identify and list all expenses</option>
             <option value="calc_revenue">Calculate revenue</option>
-        </select>
+        </select> -->
       </div>
 
       <div id="question9" class="question-container">
@@ -213,7 +218,6 @@
         <!-- <input type="text" name="name_surname" id="name_surname" placeholder="Name & Surname" maxlength="13" required> -->
       </div>
       <!-- hidden attributes -->
-      
       <input type="hidden" name="phoneNumber" id="phoneNumber" value="<%- number %>"/>
   </form>
   <button id="prev_btn">Previous</button>
@@ -229,7 +233,7 @@
    </div>
   <div id="succesful_quiz_div" class="question-container">
     <h1>You Passed</h1>
-    <p>Congratulations you passed the quiz by getting 10/10.</p>
+    <p>Congratulations you passed the quiz by getting <span class="quiz_result"></span>/10.</p>
     <p>You will recieve your certificate via a message shortly.</p>
     <button id="chat_btn">Go To Chat</button>
    </div>

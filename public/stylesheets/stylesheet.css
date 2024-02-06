@@ -15,17 +15,22 @@ body {
     color: #252223;
 }
 
-#santam_logo {
+#santamLogo {
     width: 28vw;
 }
 
-#ebi_title {
+#ebiTitle {
     font-size: 5.2vw;
     font-weight: 600;
     line-height: 5vw;
     padding-left: 8vw;
     margin-bottom: 1.2vw;
     letter-spacing: -0.02em;
+}
+
+#workedHardImg {
+    width: 100%; 
+    height: auto
 }
 
 #headingParagraph {
@@ -425,4 +430,16 @@ textarea {
     line-height: 5vw;
     margin: 0;
     color: #013a81;
+}
+
+#santam_logo {
+    width: 97%;
+    margin-bottom: -6px;
+  }
+  
+#ebi_title {
+    font-size: 1.25em;
+    line-height: 1em;
+    font-weight: 600;
+    margin-left: 10px;
 }

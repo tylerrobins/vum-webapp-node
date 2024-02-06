@@ -71,6 +71,8 @@ document.addEventListener("DOMContentLoaded", function() {
     function orientationChangeHandler() {
         if (window.innerWidth <= window.innerHeight) {
             videoElement.pause();
+        } else {
+            videoElement.play();
         }
     }
 
